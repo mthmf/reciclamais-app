@@ -1,21 +1,12 @@
 package br.com.app.reciclamais.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
-import br.com.app.reciclamais.util.LocalDateTimeDeserializer;
-import br.com.app.reciclamais.util.LocalDateTimeSerializer;
 
 public class Carrinho {
 
     private Integer codigo;
     private Integer usuario;
-
     private String dataCriacao;
-
     private BigDecimal totalPesoReciclavel;
     private Boolean ativo;
 

@@ -9,20 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
-
-import com.google.android.gms.vision.Frame;
-import com.google.android.gms.vision.barcode.Barcode;
-import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import br.com.app.reciclamais.commons.Session;
 import br.com.app.reciclamais.model.Usuario;
 import br.com.app.reciclamais.util.MaskEditUtil;
-import br.com.app.reciclamais.view.CarrinhoAtivoView;
-import br.com.app.reciclamais.view.DetalhesProdutoView;
-import br.com.app.reciclamais.view.MenuView;
+import br.com.app.reciclamais.view.LixeiraView;
+import br.com.app.reciclamais.view.RotaView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -106,9 +100,8 @@ public class MainActivity extends Activity {
 
     public void afterLoginSuccess(Context context,Usuario usuario){
 
-
         Session.getInstance().setUsuario(usuario);
-        Intent intent = new Intent(context, DetalhesProdutoView.class);
+        Intent intent = new Intent(context, LixeiraView.class);
         startActivity(intent);
     }
 

@@ -1,8 +1,11 @@
 package br.com.app.reciclamais.model;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Lixeira {
+public class Lixeira implements Serializable {
 
     private Integer codigo;
     private String nomeFicticio;

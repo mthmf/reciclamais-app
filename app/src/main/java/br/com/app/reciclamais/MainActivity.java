@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,9 +14,13 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 
 import br.com.app.reciclamais.commons.Session;
+import br.com.app.reciclamais.model.BaixaCarrinho;
 import br.com.app.reciclamais.model.Usuario;
 import br.com.app.reciclamais.util.MaskEditUtil;
+import br.com.app.reciclamais.view.LeituraProdutoView;
+import br.com.app.reciclamais.view.LixeiraMapView;
 import br.com.app.reciclamais.view.LixeiraView;
+import br.com.app.reciclamais.view.MenuView;
 import br.com.app.reciclamais.view.RotaView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -101,7 +106,7 @@ public class MainActivity extends Activity {
     public void afterLoginSuccess(Context context,Usuario usuario){
 
         Session.getInstance().setUsuario(usuario);
-        Intent intent = new Intent(context, LixeiraView.class);
+        Intent intent = new Intent(context, MenuView.class);
         startActivity(intent);
     }
 

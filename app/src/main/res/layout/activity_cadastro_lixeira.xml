@@ -21,7 +21,7 @@
         android:id="@+id/endereco_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Endereço"
         app:layout_constraintStart_toStartOf="@+id/edit_nome_fic"
         app:layout_constraintTop_toBottomOf="@+id/edit_nome_fic" />
@@ -39,7 +39,7 @@
         android:id="@+id/cap_total_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="Capacidade total"
         app:layout_constraintStart_toStartOf="@+id/edit_ponto_ref"
         app:layout_constraintTop_toBottomOf="@+id/edit_ponto_ref" />
@@ -47,8 +47,8 @@
     <EditText
         android:id="@+id/edit_nome_fic"
         android:layout_width="329dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -62,7 +62,7 @@
         android:id="@+id/edit_endereco"
         android:layout_width="329dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Rua de teste"
@@ -84,31 +84,30 @@
         android:id="@+id/edit_cap_total"
         android:layout_width="329dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="80"
         app:layout_constraintStart_toStartOf="@+id/cap_total_id"
         app:layout_constraintTop_toBottomOf="@+id/cap_total_id" />
 
-
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_cap_total">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/mapView"
+        <Button
+            android:id="@+id/btn_salvar_lixeira"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:apiKey="AIzaSyCK3CxSoYnhI2gmnznu1ZTR28Ixi1GQdDk" />
+            android:layout_height="wrap_content"
+            android:text="Salvar Lixeira" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

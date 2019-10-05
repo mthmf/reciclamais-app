@@ -36,6 +36,9 @@ public interface API {
     @POST("api/v1/lixeira/all")
     Call<List<Lixeira>> buscaLixeiras(@Body String st);
 
+    @POST("api/v1/lixeira")
+    Call<Integer> salvarLixeira(@Body Lixeira lixeira);
+
     @PUT("api/v1/lixeira")
     Call<Lixeira> alteraLixeira(@Body Lixeira lixeira);
 
@@ -44,73 +47,6 @@ public interface API {
 
     @POST("api/v1/rota")
     Call<Integer> cadastraRota(@Body Rota rota);
-
-
-/*
-    @GET("?ppopcao=55&requisicao=48&opcao=1&request=1")
-    Call<ApiRoute> pdvs(@Query("cdUnb") String unb, @Query("idUsuario") String idUsuario);
-
-    @GET("http://receitaws.com.br/v1/cnpj/{value}")
-    Call<ApiReceitaInfo> searchAddress(@Path("value") String cnpj);
-
-    @GET("http://52.70.21.228:8089/v1/cdd/nearby?limit=1&resale=true")
-    Call<List<ApiNearby>> searchNearby(@Query("lat") String latitude, @Query("lon") String longitude);
-
-    @Multipart
-    @POST("http://186.250.184.95/backup")
-    Call<Void> sendBackup(@Query("timestamp") String timestamp,
-                          @Query("nonce") String nonce,
-                          @Part MultipartBody.Part file);
-
-    @GET("url")
-    Call<ApiPesquisaNge> getPesquisaNge();
-
-
-    @POST(BuildConfig.PHOENIX_URL + "/api/gcad/input/success")
-    Call<ApiPhoenixResponse> sendPhoenixSuccess(@Header("Authorization") String auth, @Body ApiDischargePhoenixSuggestionSuccess success);
-
-    @POST(BuildConfig.PHOENIX_URL + "/api/gcad/input/failure")
-    Call<ApiPhoenixResponse> sendPhoenixFailure(@Header("Authorization") String auth, @Body ApiDischargePhoenixSuggestionFailure failure);
-
-    @POST(BuildConfig.PHOENIX_URL + "/api/gcad/input/closed")
-    Call<ApiPhoenixResponse> sendPhoenixClosed(@Header("Authorization") String auth, @Body ApiDischargePhoenixSuggestionFailure failure);
-
-    @POST(BuildConfig.PHOENIX_URL + "/api/gcad/input/coordinates")
-    Call<ApiPhoenixResponse> sendPhoenixCoordinate(@Header("Authorization") String auth, @Body ApiDischargePhoenixCoordinateContainer container);
-
-    @GET(BuildConfig.PHOENIX_URL + "/api/suggestion/photos/{suggestionId}")
-    Call<ApiPhoenixSuggestionImage> getPhoenixImages(@Header("Authorization") String auth, @Path("suggestionId") String suggestionId);
-
-    @GET(BuildConfig.PHOENIX_URL + "/api/estados")
-    Call<List<ApiPhoenixUFs.PhoenixUF>> getAllUfs(@Header("Authorization") String auth);
-
-    @GET(BuildConfig.PHOENIX_URL + "/api/{uf}/cidades")
-    Call<List<ApiPhoenixCities.PhoenixCity>> getAllCities(@Header("Authorization") String auth, @Path("uf") String uf);
-
-    @GET(BuildConfig.PHOENIX_URL + "/api/{uf}/{city}/bairros")
-    Call<List<ApiPhoenixNeighborhoods.PhoenixNeighborhood>> getNeighborhoods(@Header("Authorization") String auth, @Path("uf") String uf, @Path("city") String city);
-
-    @GET(BuildConfig.PHOENIX_URL + "/api/gcad/{uf}/{city}/suggestions-not-visited")
-    Call<ApiPhoenix> getSuggestions(@Header("Authorization") String auth,
-                                    @Path("uf") String uf,
-                                    @Path("city") String city);
-
-    @GET(BuildConfig.PHOENIX_URL + "/api/nearest/suggestions-not-visited")
-    Call<ApiPhoenix> getSuggestionsNear(@Header("Authorization") String auth,
-                                        @Query("latitude") Double latitude,
-                                        @Query("longitude") Double longitude, @Query("atlas") boolean atlas);
-
-    @POST(BuildConfig.PHOENIX_URL + "/api/verify-visited-point")
-    Call<Boolean> verifyIfPointIsVisited(@Header("Authorization") String auth, @Body RequestBody pointId);
-
-
-    @GET(BuildConfig.PHOENIX_URL + "/api/gcad/{estado}/{cidade}/{unb}/{setor}/suggestions-not-visited")
-    Call<List<ApiPhoenixSuggestion>> getSalesData(@Header("Authorization") String auth, @Path("estado") String uf,
-                                                  @Path("cidade") String city,
-                                                  @Path("unb") String unb,
-                                                  @Path("setor") int userCode,
-                                                  @Query("bairros") String[] neighborhoods);
-*/
 
     interface Builder {
         API build();

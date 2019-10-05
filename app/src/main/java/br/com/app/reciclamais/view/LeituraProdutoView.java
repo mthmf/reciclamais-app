@@ -9,6 +9,7 @@ import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.vision.CameraSource;
@@ -18,11 +19,12 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 
+import br.com.app.reciclamais.MainActivity;
 import br.com.app.reciclamais.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetalhesProdutoView extends Activity implements Detector.Processor {
+public class LeituraProdutoView extends Activity implements Detector.Processor {
 
     @BindView(R.id.surfaceView)
     public SurfaceView surfaceView;
@@ -34,7 +36,7 @@ public class DetalhesProdutoView extends Activity implements Detector.Processor 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detalhes_produto);
+        setContentView(R.layout.activity_leitura_produto);
         ButterKnife.bind(this);
 
         barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.ALL_FORMATS).build();
@@ -83,9 +85,8 @@ public class DetalhesProdutoView extends Activity implements Detector.Processor 
     @Override
     public void receiveDetections(Detector.Detections detections) {
         final SparseArray<Barcode> barcodes = detections.getDetectedItems();
-        if(barcodes.size() != 0 ){
-            System.out.println(barcodes.get(0));
-
+        if(barcodes.size() != 0 ) {
+            System.out.println(barcodes.valueAt(0));
         }
     }
 }

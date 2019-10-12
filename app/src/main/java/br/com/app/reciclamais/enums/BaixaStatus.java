@@ -1,19 +1,19 @@
 package br.com.app.reciclamais.enums;
 
-public enum PerfilEnum {
+public enum BaixaStatus {
 
-    COMUM(1, "Usuario comum"),
-    COLETADOR(2, "Usuario coletador");
+    PENDENTE("P", "Pendente"),
+    BAIXADO("B", "Baixado");
 
-    PerfilEnum(Integer codigo, String descricao) {
+    BaixaStatus(String codigo, String descricao) {
         this.codigo = codigo;
         this.descricao = descricao;
     }
 
-    private Integer codigo;
+    private String codigo;
     private String descricao;
 
-    public Integer getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 }

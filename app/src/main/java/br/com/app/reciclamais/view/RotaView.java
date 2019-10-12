@@ -102,7 +102,6 @@ public class RotaView extends Activity  {
                                 @Override
                                 public void onFailure(Call<Lixeira> call, Throwable t) {
                                     Log.e("Não foi possível buscar os produtos do carrinho", "Erro ao buscar produtos do carrinho"+ t.getMessage());
-
                                 }
                             });
 

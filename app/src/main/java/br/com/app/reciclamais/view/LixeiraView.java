@@ -1,6 +1,8 @@
 package br.com.app.reciclamais.view;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -71,15 +73,19 @@ public class LixeiraView extends Activity {
                     public void onResponse(Call<Integer> call, Response<Integer> response) {
                         if(response.code() != 201){
                             new AlertDialog.Builder(LixeiraView.this)
-                                    .setTitle("Lixeira cadastrada com sucesso")
-                                    .setPositiveButton("OK", null)
-                                    .show();
-                        } else {
-                            new AlertDialog.Builder(LixeiraView.this)
                                     .setTitle("Não foi possível cadastrar a lixeira")
                                     .setMessage("Ocorreu um problema ao realizar o cadastro")
                                     .setPositiveButton("OK", null)
                                     .show();
+                        } else {
+                            new AlertDialog.Builder(LixeiraView.this)
+                                    .setTitle("Lixeira cadastrada com sucesso")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            Intent intent = new Intent(LixeiraView.this, MenuView.class);
+                                            startActivity(intent);
+                                        }
+                                    })                                    .show();
                         }
                     }
 

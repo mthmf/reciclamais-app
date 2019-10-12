@@ -1,7 +1,5 @@
 package br.com.app.reciclamais.model;
 
-import java.time.LocalDateTime;
-
 public class BaixaCarrinho {
 
     private Integer codigo;

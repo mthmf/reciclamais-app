@@ -1,6 +1,7 @@
 package br.com.app.reciclamais.util;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Util {
@@ -11,7 +12,11 @@ public class Util {
     public static String getDate(String data) {
         LocalDate formatDateTime = LocalDate.parse(data, formatterDataTime);
         return formatterDate.format(formatDateTime);
-
     }
+
+    public static String  getDateTime(LocalDateTime data){
+        return formatterDataTime.format(data);
+    }
+
 
 }

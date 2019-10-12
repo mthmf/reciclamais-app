@@ -9,27 +9,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import br.com.app.reciclamais.R;
 import br.com.app.reciclamais.model.Lixeira;
+import br.com.app.reciclamais.model.Rota;
 
 
-public class LixeiraHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class RotaHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView endereco;
-    public TextView pontoRef;
-    public TextView capTotal;
-    public TextView capAtual;
+    public TextView descricao;
+    public TextView dataInicio;
+    public TextView dataFim;
 
-    public Lixeira lixeiraSelecionada;
+    public Rota rotaSelecionada;
     public View itemView;
     public boolean selected;
 
-    public LixeiraHolder(@NonNull View view) {
+    public RotaHolder(@NonNull View view) {
         super(view);
         itemView = view;
-        endereco = (TextView) view.findViewById(R.id.row_endereco);
-        pontoRef = (TextView) view.findViewById(R.id.row_ponto_ref_);
-        capTotal = (TextView) view.findViewById(R.id.row_cap_total);
-        capAtual = (TextView) view.findViewById(R.id.row_cap_atual);
-        //view.setOnClickListener(this);
+        descricao = (TextView) view.findViewById(R.id.row_descricao_rota);
+        dataInicio = (TextView) view.findViewById(R.id.row_data_fim_rota);
+        dataFim = (TextView) view.findViewById(R.id.row_data_fim_inicio);
     }
 
     @Override
@@ -39,35 +37,27 @@ public class LixeiraHolder extends RecyclerView.ViewHolder implements View.OnCli
 
     }
 
-    public TextView getEndereco() {
-        return endereco;
+    public TextView getDescricao() {
+        return descricao;
     }
 
-    public void setEndereco(TextView endereco) {
-        this.endereco = endereco;
+    public void setDescricao(TextView descricao) {
+        this.descricao = descricao;
     }
 
-    public TextView getPontoRef() {
-        return pontoRef;
+    public TextView getDataInicio() {
+        return dataInicio;
     }
 
-    public void setPontoRef(TextView pontoRef) {
-        this.pontoRef = pontoRef;
+    public void setDataInicio(TextView dataInicio) {
+        this.dataInicio = dataInicio;
     }
 
-    public TextView getCapTotal() {
-        return capTotal;
+    public TextView getDataFim() {
+        return dataFim;
     }
 
-    public void setCapTotal(TextView capTotal) {
-        this.capTotal = capTotal;
-    }
-
-    public TextView getCapAtual() {
-        return capAtual;
-    }
-
-    public void setCapAtual(TextView capAtual) {
-        this.capAtual = capAtual;
+    public void setDataFim(TextView dataFim) {
+        this.dataFim = dataFim;
     }
 }

@@ -1,8 +1,10 @@
 package br.com.app.reciclamais.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ import br.com.app.reciclamais.ReciclaApplication;
 import br.com.app.reciclamais.adapter.ListaProdutoCarrinhoAdapter;
 import br.com.app.reciclamais.commons.Session;
 import br.com.app.reciclamais.model.Carrinho;
+import br.com.app.reciclamais.model.Lixeira;
 import br.com.app.reciclamais.model.Produto;
 import br.com.app.reciclamais.util.Util;
 import butterknife.BindView;
@@ -73,6 +76,15 @@ public class CarrinhoAtivoView extends Activity {
     }
 
     public void startElements(){
+        btnFechaCarrinho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), RealizaBaixaView.class);
+                intent.putExtra("carrinho", carrinho);
+                startActivity(intent);
+            }
+        });
+
         Call<Carrinho> call =  ReciclaApplication.getInstance().getAPI().buscaCarrinhoAtual(Session.getInstance().getUsuario());
         call.enqueue(new Callback<Carrinho>() {
             @Override

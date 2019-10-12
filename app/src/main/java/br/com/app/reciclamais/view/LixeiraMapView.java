@@ -83,15 +83,15 @@ public class LixeiraMapView extends FragmentActivity implements OnMapReadyCallba
         map.clear(); //clear old markers
 
         CameraPosition googlePlex = CameraPosition.builder()
-                .target(new LatLng(37.4219999,-122.0862462))
-                .zoom(10)
-                .bearing(0)
-                .tilt(45)
+                .target(new LatLng(-26.864636, -49.055920))
+                .zoom(20)
+                .bearing(10)
+                .tilt(30)
                 .build();
 
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 10000, null);
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 100, null);
 
-        map.addMarker(new MarkerOptions()
+       /* map.addMarker(new MarkerOptions()
                 .position(new LatLng(37.4219999, -122.0862462))
                 .title("Spider Man")
                 .snippet("His Talent : Plenty of money"));
@@ -103,7 +103,7 @@ public class LixeiraMapView extends FragmentActivity implements OnMapReadyCallba
 
         map.addMarker(new MarkerOptions()
                 .position(new LatLng(37.3092293,-122.1136845))
-                .title("Captain America"));
+                .title("Captain America"));*/
 
         //map.setMyLocationEnabled(true);
         map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {

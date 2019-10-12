@@ -1,11 +1,9 @@
 package br.com.app.reciclamais.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -14,47 +12,46 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import br.com.app.reciclamais.R;
-import br.com.app.reciclamais.holder.ListaProdutoCarrinhoHolder;
 import br.com.app.reciclamais.holder.LixeiraHolder;
+import br.com.app.reciclamais.holder.RotaHolder;
 import br.com.app.reciclamais.model.Lixeira;
-import br.com.app.reciclamais.model.Produto;
+import br.com.app.reciclamais.model.Rota;
 
 
-public class LixeiraAdapter extends RecyclerView.Adapter {
+public class RotaAdapter extends RecyclerView.Adapter {
 
-    private List<Lixeira> lixeiras;
+    private List<Rota> rotas;
     private Context context;
-    private Lixeira lixeiraSelecionada;
+    private Rota rotaSelecionada;
 
-    public LixeiraAdapter(List<Lixeira> lixeiras, Context context){
-        this.lixeiras = lixeiras;
+    public RotaAdapter(List<Rota> rotas, Context context){
+        this.rotas = rotas;
         this.context = context;
-
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)
-                .inflate(R.layout.row_lixeira_baixa, parent, false);
+                .inflate(R.layout.row_rota, parent, false);
         return new LixeiraHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
-        final LixeiraHolder holder = (LixeiraHolder) viewHolder;
-        final Lixeira lixeira = lixeiras.get(position);
-        holder.getEndereco().setText(lixeira.getEndereco());
-        holder.getPontoRef().setText(lixeira.getPontoReferencia());
-        holder.getCapTotal().setText(String.valueOf(lixeira.getCapacidadeTotal()));
-        holder.getCapAtual().setText(String.valueOf(lixeira.getCapacidadeAtual()));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        final RotaHolder holder = (RotaHolder) viewHolder;
+        final Rota rota = rotas.get(position);
+        holder.getDescricao().setText(rota.getDescricao());
+        holder.getDataInicio().setText(rota.getDataInicio());
+        holder.getDataFim().setText(rota.getDataFinal());
+
+        /*holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 holder.selected = !holder.selected;
                 System.out.println("Posição "+  position);
                 if(holder.selected && lixeiraSelecionada == null){
-                    lixeiraSelecionada = lixeiras.get(position);
+                    lixeiraSelecionada = rotas.get(position);
                 } else {
                     lixeiraSelecionada = null;
                 }
@@ -63,15 +60,15 @@ public class LixeiraAdapter extends RecyclerView.Adapter {
                 holder.getPontoRef().setText("PONTO DA MERDA");
                 notifyDataSetChanged();
             }
-        });
+        });*/
     }
 
-    public Lixeira getLixeiraSelecionada() {
-        return lixeiraSelecionada;
+    public Rota getRotaSelecionada() {
+        return rotaSelecionada;
     }
 
     @Override
     public int getItemCount() {
-        return lixeiras.size();
+        return rotas.size();
     }
 }

@@ -1,8 +1,11 @@
 package br.com.app.reciclamais.model;
 
+import android.widget.SectionIndexer;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Carrinho {
+public class Carrinho implements Serializable {
 
     private Integer codigo;
     private Integer usuario;

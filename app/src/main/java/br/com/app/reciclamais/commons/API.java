@@ -3,6 +3,7 @@ package br.com.app.reciclamais.commons;
 
 import java.util.List;
 
+import br.com.app.reciclamais.dto.ProdutoDTO;
 import br.com.app.reciclamais.model.BaixaCarrinho;
 import br.com.app.reciclamais.model.Carrinho;
 import br.com.app.reciclamais.model.Lixeira;
@@ -43,16 +44,22 @@ public interface API {
     Call<Lixeira> alteraLixeira(@Body Lixeira lixeira);
 
     @POST("api/v1/baixacarrinho")
-    Call<Integer> confirmaAgendamentoBaixa(@Body BaixaCarrinho baixaCarrinho);
+    Call<Integer> confirmaBaixa(@Body BaixaCarrinho baixaCarrinho);
 
     @POST("api/v1/rota")
     Call<Integer> cadastraRota(@Body Rota rota);
 
     @POST("api/v1/produto")
-    Call<Integer> cadastraProduto(@Body Produto produto, @Body Usuario usuario);
+    Call<Integer> cadastraProduto(@Body ProdutoDTO produto);
 
     @GET("api/v1/produto/ident/{identificador}")
     Call<Produto> buscaProduto(@Path("identificador") String identificador);
+
+    @PUT("api/v1/carrinho")
+    Call<Carrinho> alteraCarrinho(@Body Carrinho carrinho);
+
+    @POST("api/v1/rota")
+    Call<Rota> buscaRotas(@Body String st);
 
     interface Builder {
         API build();

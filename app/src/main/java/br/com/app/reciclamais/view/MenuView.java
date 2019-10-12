@@ -101,7 +101,7 @@ public class MenuView extends AppCompatActivity implements NavigationView.OnNavi
                 break;
             }
             case R.id.nav_item_cad_rota: {
-                Intent intent = new Intent(this, Rota.class);
+                Intent intent = new Intent(this, RotaView.class);
                 startActivity(intent);
                 break;
             }

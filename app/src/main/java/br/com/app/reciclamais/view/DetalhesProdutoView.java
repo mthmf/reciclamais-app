@@ -15,6 +15,7 @@ import br.com.app.reciclamais.MainActivity;
 import br.com.app.reciclamais.R;
 import br.com.app.reciclamais.ReciclaApplication;
 import br.com.app.reciclamais.commons.Session;
+import br.com.app.reciclamais.dto.ProdutoDTO;
 import br.com.app.reciclamais.model.Lixeira;
 import br.com.app.reciclamais.model.Produto;
 import butterknife.BindView;
@@ -57,7 +58,9 @@ public class DetalhesProdutoView extends Activity {
         buttonSalvarProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<Integer> callProduto = ReciclaApplication.getInstance().getAPI().cadastraProduto(produto, Session.getInstance().getUsuario());
+                ProdutoDTO dto = new ProdutoDTO(produto.getCodigo(), Session.getInstance().getUsuario().getCodigo());
+
+                Call<Integer> callProduto = ReciclaApplication.getInstance().getAPI().cadastraProduto(dto);
                 callProduto.enqueue(new Callback<Integer>() {
                     @Override
                     public void onResponse(Call<Integer> call, Response<Integer> response) {

@@ -48,6 +48,12 @@ public interface API {
     @POST("api/v1/rota")
     Call<Integer> cadastraRota(@Body Rota rota);
 
+    @POST("api/v1/produto")
+    Call<Integer> cadastraProduto(@Body Produto produto, @Body Usuario usuario);
+
+    @GET("api/v1/produto/ident/{identificador}")
+    Call<Produto> buscaProduto(@Path("identificador") String identificador);
+
     interface Builder {
         API build();
     }

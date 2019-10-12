@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 
 import br.com.app.reciclamais.commons.Session;
+import br.com.app.reciclamais.enums.PerfilEnum;
 import br.com.app.reciclamais.model.BaixaCarrinho;
 import br.com.app.reciclamais.model.Usuario;
 import br.com.app.reciclamais.util.MaskEditUtil;
@@ -71,10 +72,9 @@ public class MainActivity extends Activity {
                 Usuario usuario = new Usuario();
                 usuario.setEmail(editEmail.getText().toString());
                 usuario.setSenha(editPwd.getText().toString());
-                final Context context = v.getContext();
 
-                //Session.getInstance().setUsuario(usuario);
-               /* Intent intent = new Intent(context, CarrinhoAtivoView.class);
+                final Context context = v.getContext();
+/*                Intent intent = new Intent(context, MenuView.class);
                 startActivity(intent);*/
 
                 Call<Usuario> call = ReciclaApplication.getInstance().getAPI().login(usuario);
@@ -117,10 +117,11 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Usuario usuario = new Usuario();
-                usuario.setCpf(editCpf.getText().toString());
+                usuario.setCpf(MaskEditUtil.unmask(editCpf.getText().toString()));
                 usuario.setNome(editNome.getText().toString());
                 usuario.setEmail(editEmail.getText().toString());
                 usuario.setSenha(editPwd.getText().toString());
+                usuario.setPerfil(PerfilEnum.COMUM.getCodigo());
                 Context context = v.getContext();
 
                 Call<Integer> call = ReciclaApplication.getInstance().getAPI().sendUsuario(usuario);

@@ -8,7 +8,7 @@ public class Usuario {
     private String nome;
     private String email;
     private String senha;
-    private String tipo;
+    private Integer perfil;
 
     public Integer getCodigo() {
         return codigo;
@@ -46,11 +46,11 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public String getTipo() {
-        return tipo;
+    public Integer getPerfil() {
+        return perfil;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setPerfil(Integer perfil) {
+        this.perfil = perfil;
     }
 }

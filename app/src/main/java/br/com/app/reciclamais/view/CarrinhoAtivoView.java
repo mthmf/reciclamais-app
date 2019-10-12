@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import br.com.app.reciclamais.adapter.ListaProdutoCarrinhoAdapter;
 import br.com.app.reciclamais.commons.Session;
 import br.com.app.reciclamais.model.Carrinho;
 import br.com.app.reciclamais.model.Produto;
+import br.com.app.reciclamais.util.Util;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -62,8 +64,6 @@ public class CarrinhoAtivoView extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carrinho_ativo);
         ButterKnife.bind(this);
-
-
     }
 
     @Override
@@ -81,8 +81,7 @@ public class CarrinhoAtivoView extends Activity {
 
                 // Seta valores do carrinho
                 textTotalCarrinho.setText(String.valueOf(carrinho.getTotalPesoReciclavel()));
-                textCriacao.setText(String.valueOf(carrinho.getDataCriacao()));
-                carrinho.setDataCriacao("2019-09-24 21:25:55");
+                textCriacao.setText(Util.getDate(carrinho.getDataCriacao()));
 
                 Call<List<Produto>> callProdutos =  ReciclaApplication.getInstance().getAPI().buscaProdutosCarrinho(carrinho);
                 callProdutos.enqueue(callBackProdutos());
@@ -101,7 +100,6 @@ public class CarrinhoAtivoView extends Activity {
             @Override
             public void onResponse(Call<List<Produto>> call, Response<List<Produto>> response) {
                 produtos = response.body();
-
                 // Seta os produtos
                 recyclerView.setAdapter(new ListaProdutoCarrinhoAdapter(produtos, CarrinhoAtivoView.this));
                 RecyclerView.LayoutManager layout = new LinearLayoutManager(CarrinhoAtivoView.this, RecyclerView.VERTICAL, false);

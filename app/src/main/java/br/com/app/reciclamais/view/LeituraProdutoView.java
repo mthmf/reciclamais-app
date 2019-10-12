@@ -2,6 +2,7 @@ package br.com.app.reciclamais.view;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,10 +20,14 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 
-import br.com.app.reciclamais.MainActivity;
 import br.com.app.reciclamais.R;
+import br.com.app.reciclamais.ReciclaApplication;
+import br.com.app.reciclamais.model.Produto;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LeituraProdutoView extends Activity implements Detector.Processor {
 
@@ -87,6 +92,35 @@ public class LeituraProdutoView extends Activity implements Detector.Processor {
         final SparseArray<Barcode> barcodes = detections.getDetectedItems();
         if(barcodes.size() != 0 ) {
             System.out.println(barcodes.valueAt(0));
+            Barcode bar = barcodes.valueAt(0);
+            Call<Produto> callProduto = ReciclaApplication.getInstance().getAPI().buscaProduto(bar.displayValue);
+            callProduto.enqueue(new Callback<Produto>() {
+                @Override
+                public void onResponse(Call<Produto> call, Response<Produto> response) {
+                    Produto produto = response.body();
+                    if(produto != null){
+                        Intent intent = new Intent(LeituraProdutoView.this, DetalhesProdutoView.class);
+                        intent.putExtra("produto", produto);
+                        startActivity(intent);
+                    } else {
+                        new AlertDialog.Builder(LeituraProdutoView.this)
+                                .setTitle("Produto não encontrado")
+                                .setMessage("Favor informar um produto válido ou entre em contato com o nosso suporte.")
+                                .setPositiveButton("OK", null)
+                                .show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Produto> call, Throwable t) {
+                    new AlertDialog.Builder(LeituraProdutoView.this)
+                            .setTitle("Produto não encontrado")
+                            .setMessage("Favor informar um produto válido ou entre em contato com o nosso suporte.")
+                            .setPositiveButton("OK", null)
+                            .show();
+                }
+            });
+
         }
     }
 }

@@ -3,10 +3,16 @@
     <group>
         <item android:id="@+id/nav_item_carrinho_ativo"
             android:icon="@android:drawable/ic_menu_add"
+            android:visible="false"
             android:title="Meu carrinho" />
         <item android:id="@+id/nav_item_novo_produto"
             android:icon="@android:drawable/ic_menu_agenda"
+            android:visible="false"
             android:title="Novo Produto" />
+        <item android:id="@+id/nav_item_baixa"
+            android:icon="@android:drawable/ic_menu_agenda"
+            android:visible="false"
+            android:title="Baixa carrinho" />
     </group>
     <!-- <group android:id="@+id/group_menu"> <item android:id="@+id/nav_item_four" android:title="Item 4" />
          <item android:id="@+id/nav_item_five" android:title="Item 5" />
@@ -17,9 +23,11 @@
         <menu>
             <item android:id="@+id/nav_item_cad_lixeira"
                 android:icon="@android:drawable/ic_menu_camera"
+                android:visible="false"
                 android:title="Lixeira" />
             <item android:id="@+id/nav_item_cad_rota"
                 android:icon="@android:drawable/ic_menu_compass"
+                android:visible="false"
                 android:title="Rota" />
         </menu>
     </item>

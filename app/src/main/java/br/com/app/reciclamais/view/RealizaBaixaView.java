@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -26,7 +27,23 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ListaLixeirasView extends Activity {
+public class RealizaBaixaView extends Activity {
+
+    @BindView(R.id.text_criacao_id_baixa)
+    public TextView textCriacaoId;
+
+    @BindView(R.id.image_carrinho_baixa)
+    public ImageView imageCarrinho;
+
+    @BindView(R.id.text_peso_id_baixa)
+    public TextView textPesoId;
+
+    @BindView(R.id.text_criacao_baixa)
+    public TextView textCriacao;
+
+    @BindView(R.id.text_total_carrinho_baixa)
+    public TextView  textTotalCarrinho;
+
 
     @BindView(R.id.lixeira_titulo)
     public TextView lixeiraTitulo;
@@ -43,7 +60,7 @@ public class ListaLixeirasView extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lixeira_baixa);
+        setContentView(R.layout.activity_realizar_baixa);
         ButterKnife.bind(this);
     }
 
@@ -58,7 +75,7 @@ public class ListaLixeirasView extends Activity {
             @Override
             public void onClick(View v) {
                 if(adapter.getLixeiraSelecionada() == null){
-                    new AlertDialog.Builder(ListaLixeirasView.this)
+                    new AlertDialog.Builder(RealizaBaixaView.this)
                             .setTitle("Selecione uma lixeira para fazer a baixa")
                             .setMessage("Não foi possível fazer a baixa")
                             .setPositiveButton("OK", null)
@@ -68,7 +85,6 @@ public class ListaLixeirasView extends Activity {
                 BaixaCarrinho baixaCarrinho = new BaixaCarrinho();
                 baixaCarrinho.setCodigoCarrinho(9); //TODO
                 baixaCarrinho.setCodigoLixeira(adapter.getLixeiraSelecionada().getCodigo());
-                baixaCarrinho.setDataAgendamento("2019-09-24 21:25:55");
                 baixaCarrinho.setDataBaixa("2019-09-24 21:25:55");
                 baixaCarrinho.setStatus("P");
 
@@ -78,13 +94,13 @@ public class ListaLixeirasView extends Activity {
                     public void onResponse(Call<Integer> call, Response<Integer> response) {
                         System.out.println(" Código " + response.code());
                         if(response.code()== 201){
-                            new AlertDialog.Builder(ListaLixeirasView.this)
+                            new AlertDialog.Builder(RealizaBaixaView.this)
                                     .setTitle("Baixa agendada")
                                     .setMessage("Verifique a lista de agendamentos")
                                     .setPositiveButton("OK", null)
                                     .show();
                         } else {
-                            new AlertDialog.Builder(ListaLixeirasView.this)
+                            new AlertDialog.Builder(RealizaBaixaView.this)
                                     .setTitle("Ocorreu um erro ao cadastrar o agendamento")
                                     .setMessage("Favor tente novamente mais tarde.")
                                     .setPositiveButton("OK", null)
@@ -109,9 +125,9 @@ public class ListaLixeirasView extends Activity {
                 lixeiras = response.body();
 
                 // Seta as lixeiras disponíveis
-                adapter = new LixeiraAdapter(lixeiras, ListaLixeirasView.this);
+                adapter = new LixeiraAdapter(lixeiras, RealizaBaixaView.this);
                 recyclerLixeira.setAdapter(adapter);
-                RecyclerView.LayoutManager layout = new LinearLayoutManager(ListaLixeirasView.this, RecyclerView.VERTICAL, false);
+                RecyclerView.LayoutManager layout = new LinearLayoutManager(RealizaBaixaView.this, RecyclerView.VERTICAL, false);
                 recyclerLixeira.setLayoutManager(layout);
             }
 

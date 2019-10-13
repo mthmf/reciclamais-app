@@ -59,7 +59,12 @@ public interface API {
     Call<Carrinho> alteraCarrinho(@Body Carrinho carrinho);
 
     @POST("api/v1/rota")
-    Call<Rota> buscaRotas(@Body String st);
+    Call<List<Rota>> buscaRotasParaBaixa(@Body String st);
+
+
+    @GET("api/v1/lixeira/rota/{idRota}")
+    Call<List<Lixeira>> buscaLixeiraDaRota(@Path("idRota") Integer idRota);
+
 
     interface Builder {
         API build();

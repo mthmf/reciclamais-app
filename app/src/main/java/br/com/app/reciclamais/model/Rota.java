@@ -1,6 +1,8 @@
 package br.com.app.reciclamais.model;
 
-public class Rota {
+import java.io.Serializable;
+
+public class Rota implements Serializable {
 
     private Integer codigo;
     private String descricao;

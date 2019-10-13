@@ -13,6 +13,10 @@
             android:icon="@android:drawable/ic_menu_agenda"
             android:visible="false"
             android:title="Baixa carrinho" />
+        <item android:id="@+id/nav_item_baixa_rota"
+            android:icon="@android:drawable/ic_menu_agenda"
+            android:visible="false"
+            android:title="Baixa Rota" />
     </group>
     <!-- <group android:id="@+id/group_menu"> <item android:id="@+id/nav_item_four" android:title="Item 4" />
          <item android:id="@+id/nav_item_five" android:title="Item 5" />

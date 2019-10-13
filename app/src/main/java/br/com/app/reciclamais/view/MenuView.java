@@ -50,19 +50,21 @@ public class MenuView extends AppCompatActivity implements NavigationView.OnNavi
                 menu.findItem(R.id.nav_item_cad_lixeira).setVisible(false);
                 menu.findItem(R.id.nav_item_cad_rota).setVisible(false);
                 menu.findItem(R.id.nav_item_baixa).setVisible(true);
+                menu.findItem(R.id.nav_item_baixa_rota).setVisible(false);
             } else if(PerfilEnum.COLETADOR.getCodigo().equals(usuario.getPerfil())){
                 menu.findItem(R.id.nav_item_carrinho_ativo).setVisible(false);
                 menu.findItem(R.id.nav_item_novo_produto).setVisible(false);
                 menu.findItem(R.id.nav_item_cad_lixeira).setVisible(true);
                 menu.findItem(R.id.nav_item_cad_rota).setVisible(true);
                 menu.findItem(R.id.nav_item_baixa).setVisible(false);
+                menu.findItem(R.id.nav_item_baixa_rota).setVisible(true);
             } else {
                 menu.findItem(R.id.nav_item_carrinho_ativo).setVisible(false);
                 menu.findItem(R.id.nav_item_novo_produto).setVisible(false);
                 menu.findItem(R.id.nav_item_cad_lixeira).setVisible(false);
                 menu.findItem(R.id.nav_item_cad_rota).setVisible(false);
                 menu.findItem(R.id.nav_item_baixa).setVisible(false);
-
+                menu.findItem(R.id.nav_item_baixa_rota).setVisible(false);
             }
         }
     }

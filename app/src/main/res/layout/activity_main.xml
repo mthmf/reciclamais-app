@@ -6,80 +6,118 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/edit_cpf"
-        android:layout_width="251dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="12dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="CPF"
-        app:layout_constraintBottom_toTopOf="@+id/edit_nome"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.513"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/edit_nome"
-        android:layout_width="251dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/cpf_layout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="12dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Nome"
-        app:layout_constraintBottom_toTopOf="@+id/edit_email"
+        android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.513"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
 
-    <EditText
-        android:id="@+id/edit_email"
-        android:layout_width="251dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="12dp"
-        android:ems="10"
-        android:hint="E-mail"
-        android:inputType="textPersonName"
-        android:text="teste@teste.con"
-        app:layout_constraintBottom_toTopOf="@+id/edit_pwd"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.513"
-        app:layout_constraintStart_toStartOf="parent" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_cpf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="12dp"
+            android:width="251dp"
+            android:ems="10"
+            android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/edit_pwd"
-        android:layout_width="252dp"
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nome_layout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="70dp"
-        android:ems="10"
-        android:hint="Senha"
-        android:inputType="textPassword"
-        android:text="matheus"
-        app:layout_constraintBottom_toTopOf="@+id/button_login_save"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cpf_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_nome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="12dp"
+            android:width="251dp"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nome_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_email"
+            android:layout_width="251dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="12dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="teste@teste.con" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/pwd_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_layout">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_pwd"
+            android:layout_width="251dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="12dp"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:text="matheus" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/button_login_save"
         android:layout_width="253dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="36dp"
         android:text="Login"
         app:layout_constraintBottom_toTopOf="@+id/text_mensagem"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.521"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pwd_layout" />
 
     <TextView
         android:id="@+id/text_mensagem"
@@ -95,6 +133,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout7"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -109,7 +148,7 @@
             android:layout_height="127dp"
             android:layout_marginTop="8dp"
             android:layout_weight="0"
-            android:src="@drawable/ic_person_black_24dp"/>
+            android:src="@drawable/ic_person_black_24dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,8 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
@@ -34,6 +36,8 @@ public class LeituraProdutoView extends Activity implements Detector.Processor {
     @BindView(R.id.surfaceView)
     public SurfaceView surfaceView;
 
+    private Barcode bar;
+
     private BarcodeDetector barcodeDetector;
 
     private CameraSource cameraSource;
@@ -43,7 +47,6 @@ public class LeituraProdutoView extends Activity implements Detector.Processor {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leitura_produto);
         ButterKnife.bind(this);
-
         barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.ALL_FORMATS).build();
         barcodeDetector.setProcessor(this);
 
@@ -90,9 +93,10 @@ public class LeituraProdutoView extends Activity implements Detector.Processor {
     @Override
     public void receiveDetections(Detector.Detections detections) {
         final SparseArray<Barcode> barcodes = detections.getDetectedItems();
-        if(barcodes.size() != 0 ) {
+
+        if(barcodes.size() != 0 && bar == null ) {
             System.out.println(barcodes.valueAt(0));
-            Barcode bar = barcodes.valueAt(0);
+            bar = barcodes.valueAt(0);
             Call<Produto> callProduto = ReciclaApplication.getInstance().getAPI().buscaProduto(bar.displayValue);
             callProduto.enqueue(new Callback<Produto>() {
                 @Override
@@ -121,6 +125,8 @@ public class LeituraProdutoView extends Activity implements Detector.Processor {
                 }
             });
 
+        } else {
+            bar = null;
         }
     }
 }

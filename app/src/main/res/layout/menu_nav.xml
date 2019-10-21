@@ -6,7 +6,7 @@
             android:visible="false"
             android:title="Meu carrinho" />
         <item android:id="@+id/nav_item_novo_produto"
-            android:icon="@android:drawable/ic_menu_agenda"
+            android:icon="@android:drawable/ic_menu_camera"
             android:visible="false"
             android:title="Novo Produto" />
         <item android:id="@+id/nav_item_baixa"
@@ -28,7 +28,7 @@
             <item android:id="@+id/nav_item_cad_lixeira"
                 android:icon="@android:drawable/ic_menu_camera"
                 android:visible="false"
-                android:title="Lixeira" />
+                android:title="Ponto de Coleta" />
             <item android:id="@+id/nav_item_cad_rota"
                 android:icon="@android:drawable/ic_menu_compass"
                 android:visible="false"

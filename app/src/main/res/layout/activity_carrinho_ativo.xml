@@ -28,10 +28,11 @@
 
                 <TextView
                     android:id="@+id/text_criacao_id"
+                    style="@style/DefaultItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="8dp"
                     android:text="Data de criação"
                     app:layout_constraintStart_toEndOf="@+id/image_carrinho"
                     app:layout_constraintTop_toTopOf="@+id/image_carrinho" />
@@ -40,16 +41,18 @@
                     android:id="@+id/image_carrinho"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
+                    android:src="@drawable/ic_shopping_cart_24dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:src="@drawable/ic_person_black_24dp" />
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
                     android:id="@+id/text_peso_id"
+                    style="@style/DefaultItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -117,6 +120,7 @@
 
         <TextView
             android:id="@+id/text_produto_titulo"
+            style="@style/DefaultItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -130,7 +134,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="9dp"
         android:text="Fechar Carrinho"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

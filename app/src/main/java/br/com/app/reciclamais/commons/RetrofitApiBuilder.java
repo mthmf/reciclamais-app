@@ -17,7 +17,7 @@ public class RetrofitApiBuilder implements API.Builder {
     public API build() {
         OkHttpClient client = createOkHttpClient();
         return new Retrofit.Builder()
-                .baseUrl("http://172.17.141.1:8080/")
+                .baseUrl("http://192.168.0.22:8080/")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create()))
                 .build()

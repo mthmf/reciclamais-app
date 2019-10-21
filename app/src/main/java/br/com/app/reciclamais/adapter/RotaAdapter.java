@@ -34,7 +34,7 @@ public class RotaAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.row_rota, parent, false);
-        return new LixeiraHolder(view);
+        return new RotaHolder(view);
     }
 
     @Override
@@ -45,22 +45,21 @@ public class RotaAdapter extends RecyclerView.Adapter {
         holder.getDataInicio().setText(rota.getDataInicio());
         holder.getDataFim().setText(rota.getDataFinal());
 
-        /*holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 holder.selected = !holder.selected;
                 System.out.println("Posição "+  position);
-                if(holder.selected && lixeiraSelecionada == null){
-                    lixeiraSelecionada = rotas.get(position);
+                if(holder.selected && rotaSelecionada == null){
+                    rotaSelecionada = rotas.get(position);
                 } else {
-                    lixeiraSelecionada = null;
+                    rotaSelecionada = null;
                 }
                 int color = (holder.selected ? R.color.colorPrimaryDark : R.color.colorAccent);
                 holder.itemView.setBackgroundColor(ContextCompat.getColor(v.getContext(), color));
-                holder.getPontoRef().setText("PONTO DA MERDA");
                 notifyDataSetChanged();
             }
-        });*/
+        });
     }
 
     public Rota getRotaSelecionada() {

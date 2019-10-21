@@ -60,6 +60,23 @@ public class ListaBaixaRotaView extends Activity {
             }
         });
 
+       /* rotas = new ArrayList<>();
+        Rota rota1 = new Rota();
+        rota1.setCodigo(1);
+        rota1.setDescricao("ROTA DE TESTE1");
+
+        Rota rota2 = new Rota();
+        rota2.setCodigo(2);
+        rota2.setDescricao("ROTA DE TESTE2");
+
+        rotas.add(rota1);
+        rotas.add(rota2);*/
+
+/*        adapter = new RotaAdapter(rotas, ListaBaixaRotaView.this);
+        recyclerRotas.setAdapter(adapter);
+        RecyclerView.LayoutManager layout = new LinearLayoutManager(ListaBaixaRotaView.this, RecyclerView.VERTICAL, false);
+        recyclerRotas.setLayoutManager(layout);*/
+
 
         Call<List<Rota>> rotaCall =  ReciclaApplication.getInstance().getAPI().buscaRotasParaBaixa("{}");
         rotaCall.enqueue(new Callback<List<Rota>>() {
@@ -72,6 +89,7 @@ public class ListaBaixaRotaView extends Activity {
                 RecyclerView.LayoutManager layout = new LinearLayoutManager(ListaBaixaRotaView.this, RecyclerView.VERTICAL, false);
                 recyclerRotas.setLayoutManager(layout);
             }
+
 
             @Override
             public void onFailure(Call<List<Rota>> call, Throwable t) {

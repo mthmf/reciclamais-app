@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="DefaultItem" parent="AppTheme">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#616161</item>
+    </style>
+
 </resources>

@@ -14,6 +14,10 @@ public class Util {
         return formatterDate.format(formatDateTime);
     }
 
+    public static String getDate(LocalDateTime data) {
+        return formatterDate.format(data);
+    }
+
     public static String  getDateTime(LocalDateTime data){
         return formatterDataTime.format(data);
     }

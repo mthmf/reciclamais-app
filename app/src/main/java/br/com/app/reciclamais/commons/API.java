@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.com.app.reciclamais.dto.ProdutoDTO;
 import br.com.app.reciclamais.model.BaixaCarrinho;
+import br.com.app.reciclamais.model.BaixaRota;
 import br.com.app.reciclamais.model.Carrinho;
 import br.com.app.reciclamais.model.Lixeira;
 import br.com.app.reciclamais.model.Produto;
@@ -24,6 +25,9 @@ public interface API {
 
     @POST("api/v1/user")
     Call<Integer> sendUsuario(@Body Usuario usuario);
+
+    @POST("api/v1/baixarota")
+    Call<Integer> sendBaixaRota(@Body BaixaRota baixa);
 
     @POST("api/v1/user/login")
     Call<Usuario> login(@Body Usuario usuario);
@@ -58,7 +62,7 @@ public interface API {
     @PUT("api/v1/carrinho")
     Call<Carrinho> alteraCarrinho(@Body Carrinho carrinho);
 
-    @POST("api/v1/rota")
+    @POST("api/v1//rota/all")
     Call<List<Rota>> buscaRotasParaBaixa(@Body String st);
 
 

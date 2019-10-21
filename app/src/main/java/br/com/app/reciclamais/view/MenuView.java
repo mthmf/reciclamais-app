@@ -14,6 +14,7 @@ import com.google.android.material.navigation.NavigationView;
 import br.com.app.reciclamais.R;
 import br.com.app.reciclamais.commons.Session;
 import br.com.app.reciclamais.enums.PerfilEnum;
+import br.com.app.reciclamais.model.BaixaRota;
 import br.com.app.reciclamais.model.Rota;
 import br.com.app.reciclamais.model.Usuario;
 
@@ -51,22 +52,23 @@ public class MenuView extends AppCompatActivity implements NavigationView.OnNavi
                 menu.findItem(R.id.nav_item_cad_rota).setVisible(false);
                 menu.findItem(R.id.nav_item_baixa).setVisible(true);
                 menu.findItem(R.id.nav_item_baixa_rota).setVisible(false);
-            } else if(PerfilEnum.COLETADOR.getCodigo().equals(usuario.getPerfil())){
+            } else if(PerfilEnum.COLETADOR.getCodigo().equals(usuario.getPerfil())) {
                 menu.findItem(R.id.nav_item_carrinho_ativo).setVisible(false);
                 menu.findItem(R.id.nav_item_novo_produto).setVisible(false);
                 menu.findItem(R.id.nav_item_cad_lixeira).setVisible(true);
                 menu.findItem(R.id.nav_item_cad_rota).setVisible(true);
                 menu.findItem(R.id.nav_item_baixa).setVisible(false);
                 menu.findItem(R.id.nav_item_baixa_rota).setVisible(true);
-            } else {
-                menu.findItem(R.id.nav_item_carrinho_ativo).setVisible(false);
-                menu.findItem(R.id.nav_item_novo_produto).setVisible(false);
-                menu.findItem(R.id.nav_item_cad_lixeira).setVisible(false);
-                menu.findItem(R.id.nav_item_cad_rota).setVisible(false);
-                menu.findItem(R.id.nav_item_baixa).setVisible(false);
-                menu.findItem(R.id.nav_item_baixa_rota).setVisible(false);
             }
+        } else {
+            menu.findItem(R.id.nav_item_carrinho_ativo).setVisible(false);
+            menu.findItem(R.id.nav_item_novo_produto).setVisible(false);
+            menu.findItem(R.id.nav_item_cad_lixeira).setVisible(false);
+            menu.findItem(R.id.nav_item_cad_rota).setVisible(false);
+            menu.findItem(R.id.nav_item_baixa).setVisible(false);
+            menu.findItem(R.id.nav_item_baixa_rota).setVisible(false);
         }
+
     }
 
     @Override
@@ -109,6 +111,11 @@ public class MenuView extends AppCompatActivity implements NavigationView.OnNavi
             }
             case R.id.nav_item_baixa: {
                 Intent intent = new Intent(this, RealizaBaixaView.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.nav_item_baixa_rota: {
+                Intent intent = new Intent(this, ListaBaixaRotaView.class);
                 startActivity(intent);
                 break;
             }

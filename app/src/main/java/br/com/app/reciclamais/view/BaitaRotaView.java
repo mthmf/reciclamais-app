@@ -35,9 +35,6 @@ import retrofit2.Response;
 
 public class BaitaRotaView extends Activity {
 
-    @BindView(R.id.recycler_lixeiras_rota_consulta)
-    public RecyclerView recyclerLixeira;
-
     @BindView(R.id.btn_confirmar_baixa_rota)
     public Button btnConfirmaBaixa;
 
@@ -83,7 +80,7 @@ public class BaitaRotaView extends Activity {
     public void startElements() {
         baixaRota = new BaixaRota();
 
-        Call<List<Lixeira>> lixeirasCall = ReciclaApplication.getInstance().getAPI().buscaLixeiraDaRota(rota.getCodigo());
+       /* Call<List<Lixeira>> lixeirasCall = ReciclaApplication.getInstance().getAPI().buscaLixeiraDaRota(rota.getCodigo());
         lixeirasCall.enqueue(new Callback<List<Lixeira>>() {
             @Override
             public void onResponse(Call<List<Lixeira>> call, Response<List<Lixeira>> response) {
@@ -98,7 +95,7 @@ public class BaitaRotaView extends Activity {
                 Log.e("Não foi possível buscar as rotas do carrinho", "Erro ao buscar produtos do carrinho"+ t.getMessage());
 
             }
-        });
+        });*/
 
 
         btnConfirmaBaixa.setOnClickListener(new View.OnClickListener() {

@@ -21,6 +21,7 @@ import java.util.List;
 import br.com.app.reciclamais.R;
 import br.com.app.reciclamais.ReciclaApplication;
 import br.com.app.reciclamais.adapter.ListaProdutoCarrinhoAdapter;
+import br.com.app.reciclamais.commons.OnItemClickListener;
 import br.com.app.reciclamais.commons.Session;
 import br.com.app.reciclamais.model.Carrinho;
 import br.com.app.reciclamais.model.Lixeira;
@@ -32,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CarrinhoAtivoView extends Activity {
+public class CarrinhoAtivoView extends Activity implements View.OnClickListener {
 
     @BindView(R.id.text_criacao_id)
     public TextView textCriacaoId;
@@ -107,13 +108,19 @@ public class CarrinhoAtivoView extends Activity {
 
     }
 
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
     public Callback<List<Produto>> callBackProdutos(){
         return new Callback<List<Produto>>() {
             @Override
             public void onResponse(Call<List<Produto>> call, Response<List<Produto>> response) {
                 produtos = response.body();
                 // Seta os produtos
-                recyclerView.setAdapter(new ListaProdutoCarrinhoAdapter(produtos, CarrinhoAtivoView.this));
+                recyclerView.setAdapter(new ListaProdutoCarrinhoAdapter(produtos));
                 RecyclerView.LayoutManager layout = new LinearLayoutManager(CarrinhoAtivoView.this, RecyclerView.VERTICAL, false);
                 recyclerView.setLayoutManager(layout);
             }
@@ -125,6 +132,7 @@ public class CarrinhoAtivoView extends Activity {
             }
         };
     }
+
 
 
 }

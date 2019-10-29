@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import br.com.app.reciclamais.R;
 import br.com.app.reciclamais.model.Lixeira;
+import br.com.app.reciclamais.model.Produto;
 
 
-public class LixeiraHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class LixeiraHolder extends RecyclerView.ViewHolder{
 
     public TextView endereco;
     public TextView pontoRef;
@@ -31,12 +32,7 @@ public class LixeiraHolder extends RecyclerView.ViewHolder implements View.OnCli
         capAtual = (TextView) view.findViewById(R.id.row_cap_atual);
         //view.setOnClickListener(this);
     }
-
-    @Override
-    public void onClick(View v) {
-        this.selected = !selected;
-        v.setBackgroundColor(Color.CYAN);
-
+    public void bind(final Produto produto) {
     }
 
     public TextView getEndereco() {

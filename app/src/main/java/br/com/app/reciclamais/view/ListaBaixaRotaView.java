@@ -50,7 +50,6 @@ public class ListaBaixaRotaView extends Activity {
     }
 
     public void startElements(){
-
         buttonRealizaBaixa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

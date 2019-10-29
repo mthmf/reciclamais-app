@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import br.com.app.reciclamais.R;
+import br.com.app.reciclamais.commons.OnItemClickListener;
 import br.com.app.reciclamais.holder.ListaProdutoCarrinhoHolder;
 import br.com.app.reciclamais.model.Produto;
 
@@ -18,19 +19,15 @@ import br.com.app.reciclamais.model.Produto;
 public class ListaProdutoCarrinhoAdapter extends RecyclerView.Adapter {
 
     private List<Produto> produtos;
-    private Context context;
 
-
-    public ListaProdutoCarrinhoAdapter (List<Produto> produtos, Context context){
+    public ListaProdutoCarrinhoAdapter (List<Produto> produtos){
         this.produtos = produtos;
-        this.context = context;
-
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context)
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_produto_carrinho_ativo, parent, false);
         return new ListaProdutoCarrinhoHolder(view);
     }
@@ -38,10 +35,7 @@ public class ListaProdutoCarrinhoAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         ListaProdutoCarrinhoHolder holder = (ListaProdutoCarrinhoHolder) viewHolder;
-        Produto produto = produtos.get(position);
-        holder.getNome().setText(produto.getNome());
-        holder.getFabricante().setText(produto.getNomeFabricante());
-        holder.getPeso().setText(String.valueOf(produto.getPeso()));
+        holder.bind(produtos.get(position));
     }
 
     @Override

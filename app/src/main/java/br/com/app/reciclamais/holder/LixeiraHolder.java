@@ -1,6 +1,5 @@
 package br.com.app.reciclamais.holder;
 
-import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import br.com.app.reciclamais.R;
 import br.com.app.reciclamais.model.Lixeira;
-import br.com.app.reciclamais.model.Produto;
 
 
 public class LixeiraHolder extends RecyclerView.ViewHolder{
@@ -30,40 +28,21 @@ public class LixeiraHolder extends RecyclerView.ViewHolder{
         pontoRef = (TextView) view.findViewById(R.id.row_ponto_ref_);
         capTotal = (TextView) view.findViewById(R.id.row_cap_total);
         capAtual = (TextView) view.findViewById(R.id.row_cap_atual);
-        //view.setOnClickListener(this);
-    }
-    public void bind(final Produto produto) {
     }
 
     public TextView getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(TextView endereco) {
-        this.endereco = endereco;
-    }
-
     public TextView getPontoRef() {
         return pontoRef;
-    }
-
-    public void setPontoRef(TextView pontoRef) {
-        this.pontoRef = pontoRef;
     }
 
     public TextView getCapTotal() {
         return capTotal;
     }
 
-    public void setCapTotal(TextView capTotal) {
-        this.capTotal = capTotal;
-    }
-
     public TextView getCapAtual() {
         return capAtual;
-    }
-
-    public void setCapAtual(TextView capAtual) {
-        this.capAtual = capAtual;
     }
 }

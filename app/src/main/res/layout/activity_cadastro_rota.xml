@@ -9,12 +9,13 @@
 
     <Button
         android:id="@+id/btn_salvar_rota"
+        style="@style/DefaultButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
-        android:text="Salvar rota"
+        android:layout_marginBottom="8dp"
+        android:text="SELECIONE OS PONTOS DE COLETA"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -43,7 +44,7 @@
         android:id="@+id/rota_data_fim"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:text="Data fim da rota"
         app:layout_constraintStart_toStartOf="@+id/edit_data_inicio"
         app:layout_constraintTop_toBottomOf="@+id/edit_data_inicio" />
@@ -56,7 +57,6 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Descricao"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/rota_descricao"
@@ -66,11 +66,10 @@
         android:id="@+id/edit_data_inicio"
         android:layout_width="313dp"
         android:layout_height="37dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/rota_data_inicio"
@@ -83,42 +82,9 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/rota_data_fim"
         app:layout_constraintTop_toBottomOf="@+id/rota_data_fim" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_data_fim">
-
-        <TextView
-            android:id="@+id/text_lixeiras_da_rota"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Lixeira" />
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_lixeiras_rota"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_salvar_rota"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

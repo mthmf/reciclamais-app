@@ -117,9 +117,10 @@
 
         <Button
             android:id="@+id/btn_salvar_produto"
+            style="@style/DefaultButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Salvar Produto" />
+            android:text="SALVAR PRODUTO" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,7 +24,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class ListaBaixaRotaView extends Activity {
+public class BaixaRotaListaView extends Activity {
 
     @BindView(R.id.recycler_rotas)
     public RecyclerView recyclerRotas;
@@ -53,7 +53,7 @@ public class ListaBaixaRotaView extends Activity {
         buttonRealizaBaixa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ListaBaixaRotaView.this, BaitaRotaView.class);
+                Intent intent = new Intent(BaixaRotaListaView.this, BaitaRotaView.class);
                 intent.putExtra("rota", adapter.getRotaSelecionada());
                 startActivity(intent);
             }
@@ -71,9 +71,9 @@ public class ListaBaixaRotaView extends Activity {
         rotas.add(rota1);
         rotas.add(rota2);*/
 
-/*        adapter = new RotaAdapter(rotas, ListaBaixaRotaView.this);
+/*        adapter = new RotaAdapter(rotas, BaixaRotaListaView.this);
         recyclerRotas.setAdapter(adapter);
-        RecyclerView.LayoutManager layout = new LinearLayoutManager(ListaBaixaRotaView.this, RecyclerView.VERTICAL, false);
+        RecyclerView.LayoutManager layout = new LinearLayoutManager(BaixaRotaListaView.this, RecyclerView.VERTICAL, false);
         recyclerRotas.setLayoutManager(layout);*/
 
 
@@ -83,9 +83,9 @@ public class ListaBaixaRotaView extends Activity {
             public void onResponse(Call<List<Rota>> call, Response<List<Rota>> response) {
                 rotas = response.body();
 
-                adapter = new RotaAdapter(rotas, ListaBaixaRotaView.this);
+                adapter = new RotaAdapter(rotas, BaixaRotaListaView.this);
                 recyclerRotas.setAdapter(adapter);
-                RecyclerView.LayoutManager layout = new LinearLayoutManager(ListaBaixaRotaView.this, RecyclerView.VERTICAL, false);
+                RecyclerView.LayoutManager layout = new LinearLayoutManager(BaixaRotaListaView.this, RecyclerView.VERTICAL, false);
                 recyclerRotas.setLayoutManager(layout);
             }
 

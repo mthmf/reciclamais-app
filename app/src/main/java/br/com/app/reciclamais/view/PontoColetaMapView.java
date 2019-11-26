@@ -1,8 +1,6 @@
 package br.com.app.reciclamais.view;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -12,8 +10,6 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,7 +28,7 @@ import br.com.app.reciclamais.model.Lixeira;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LixeiraMapView extends FragmentActivity implements OnMapReadyCallback {
+public class PontoColetaMapView extends FragmentActivity implements OnMapReadyCallback {
 
     @BindView(R.id.btn_localizacao)
     public Button btnLocalizacao;
@@ -46,8 +42,6 @@ public class LixeiraMapView extends FragmentActivity implements OnMapReadyCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa_lixeira);
         ButterKnife.bind(this);
-
-
     }
 
     @Override
@@ -58,6 +52,7 @@ public class LixeiraMapView extends FragmentActivity implements OnMapReadyCallba
 
     public void startElements(){
         lixeira = new Lixeira();
+        local = null;
         // Set up Google Maps
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -66,11 +61,11 @@ public class LixeiraMapView extends FragmentActivity implements OnMapReadyCallba
             @Override
             public void onClick(View v) {
                 if(local != null){
-                    Intent intent = new Intent(v.getContext(), LixeiraView.class);
+                    Intent intent = new Intent(v.getContext(), PontoColetaView.class);
                     intent.putExtra("lixeira", lixeira);
                     startActivity(intent);
                 } else {
-                    new AlertDialog.Builder(LixeiraMapView.this)
+                    new AlertDialog.Builder(PontoColetaMapView.this)
                             .setTitle("Um local deve ser selecionado no mapa")
                             .setMessage("Não é possível seguir com a operação. ")
                             .setPositiveButton("OK", null)
@@ -117,7 +112,7 @@ public class LixeiraMapView extends FragmentActivity implements OnMapReadyCallba
             public void onMapClick(LatLng point) {
                 map.clear();
                 local = point;
-                Geocoder geocoder = new Geocoder(LixeiraMapView.this, Locale.getDefault());
+                Geocoder geocoder = new Geocoder(PontoColetaMapView.this, Locale.getDefault());
                 try {
                     List<Address> address = geocoder.getFromLocation(point.latitude, point.longitude, 1);
                     String endereco = address.get(0).getAddressLine(0);

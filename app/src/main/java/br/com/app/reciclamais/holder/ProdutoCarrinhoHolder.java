@@ -8,13 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import br.com.app.reciclamais.R;
-import br.com.app.reciclamais.commons.OnItemClickListener;
 import br.com.app.reciclamais.model.Produto;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class ListaProdutoCarrinhoHolder extends RecyclerView.ViewHolder {
+public class ProdutoCarrinhoHolder extends RecyclerView.ViewHolder {
 
     private Integer codigo;
     @BindView(R.id.row_text_nome_produto)
@@ -26,8 +25,7 @@ public class ListaProdutoCarrinhoHolder extends RecyclerView.ViewHolder {
 
     public boolean selected;
 
-
-    public ListaProdutoCarrinhoHolder(@NonNull View view) {
+    public ProdutoCarrinhoHolder(@NonNull View view) {
         super(view);
         ButterKnife.bind(this, view);
     }

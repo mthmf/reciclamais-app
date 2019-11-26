@@ -4,18 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.google.android.material.navigation.NavigationView;
+
 import br.com.app.reciclamais.R;
 import br.com.app.reciclamais.commons.Session;
 import br.com.app.reciclamais.enums.PerfilEnum;
-import br.com.app.reciclamais.model.BaixaRota;
-import br.com.app.reciclamais.model.Rota;
 import br.com.app.reciclamais.model.Usuario;
 
 public class MenuView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -41,6 +42,7 @@ public class MenuView extends AppCompatActivity implements NavigationView.OnNavi
         validateMenuItem();
     }
 
+
     public void validateMenuItem(){
         Menu menu = navigationView.getMenu();
         Usuario usuario = Session.getInstance().getUsuario();
@@ -53,11 +55,11 @@ public class MenuView extends AppCompatActivity implements NavigationView.OnNavi
                 menu.findItem(R.id.nav_item_baixa).setVisible(true);
                 menu.findItem(R.id.nav_item_baixa_rota).setVisible(false);
             } else if(PerfilEnum.COLETADOR.getCodigo().equals(usuario.getPerfil())) {
-                menu.findItem(R.id.nav_item_carrinho_ativo).setVisible(false);
-                menu.findItem(R.id.nav_item_novo_produto).setVisible(false);
+                menu.findItem(R.id.nav_item_carrinho_ativo).setVisible(true);
+                menu.findItem(R.id.nav_item_novo_produto).setVisible(true);
                 menu.findItem(R.id.nav_item_cad_lixeira).setVisible(true);
                 menu.findItem(R.id.nav_item_cad_rota).setVisible(true);
-                menu.findItem(R.id.nav_item_baixa).setVisible(false);
+                menu.findItem(R.id.nav_item_baixa).setVisible(true);
                 menu.findItem(R.id.nav_item_baixa_rota).setVisible(true);
             }
         } else {
@@ -80,8 +82,6 @@ public class MenuView extends AppCompatActivity implements NavigationView.OnNavi
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
         }
     }
 
@@ -100,22 +100,22 @@ public class MenuView extends AppCompatActivity implements NavigationView.OnNavi
                 break;
             }
             case R.id.nav_item_cad_lixeira: {
-                Intent intent = new Intent(this, LixeiraMapView.class);
+                Intent intent = new Intent(this, PontoColetaMapView.class);
                 startActivity(intent);
                 break;
             }
             case R.id.nav_item_cad_rota: {
-                Intent intent = new Intent(this, RotaView.class);
+                Intent intent = new Intent(this, RotaCadastroView.class);
                 startActivity(intent);
                 break;
             }
             case R.id.nav_item_baixa: {
-                Intent intent = new Intent(this, RealizaBaixaView.class);
+                Intent intent = new Intent(this, BaixaCarrinhoView.class);
                 startActivity(intent);
                 break;
             }
             case R.id.nav_item_baixa_rota: {
-                Intent intent = new Intent(this, ListaBaixaRotaView.class);
+                Intent intent = new Intent(this, BaixaRotaListaView.class);
                 startActivity(intent);
                 break;
             }

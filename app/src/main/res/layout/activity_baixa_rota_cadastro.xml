@@ -17,13 +17,15 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/btn_confirmar_baixa_rota"
+            style="@style/DefaultButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Confirmar baixa" />
+            android:text="CONFIRMAR BAIXA" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +33,6 @@
         android:layout_width="416dp"
         android:layout_height="319dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +46,7 @@
             android:layout_marginTop="40dp"
             android:ems="10"
             android:hint="Hora saída"
-            android:inputType="textPersonName"
+            android:inputType="number"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_data_baixa" />
 
@@ -57,7 +58,7 @@
             android:layout_marginEnd="8dp"
             android:ems="10"
             android:hint="Hora chegada"
-            android:inputType="textPersonName"
+            android:inputType="number"
             app:layout_constraintBottom_toBottomOf="@+id/edit_hora_saida"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/edit_hora_saida"
@@ -65,6 +66,7 @@
 
         <TextView
             android:id="@+id/text_data_baixa"
+            style="@style/DefaultItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

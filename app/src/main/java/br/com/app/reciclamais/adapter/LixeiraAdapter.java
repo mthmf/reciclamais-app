@@ -1,11 +1,9 @@
 package br.com.app.reciclamais.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -14,10 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import br.com.app.reciclamais.R;
-import br.com.app.reciclamais.holder.ListaProdutoCarrinhoHolder;
 import br.com.app.reciclamais.holder.LixeiraHolder;
 import br.com.app.reciclamais.model.Lixeira;
-import br.com.app.reciclamais.model.Produto;
 
 
 public class LixeiraAdapter extends RecyclerView.Adapter {
@@ -26,10 +22,10 @@ public class LixeiraAdapter extends RecyclerView.Adapter {
     private Context context;
     private Lixeira lixeiraSelecionada;
 
+
     public LixeiraAdapter(List<Lixeira> lixeiras, Context context){
         this.lixeiras = lixeiras;
         this.context = context;
-
     }
 
     @NonNull
@@ -53,14 +49,14 @@ public class LixeiraAdapter extends RecyclerView.Adapter {
             public void onClick(View v) {
                 holder.selected = !holder.selected;
                 System.out.println("Posição "+  position);
+
                 if(holder.selected && lixeiraSelecionada == null){
                     lixeiraSelecionada = lixeiras.get(position);
                 } else {
                     lixeiraSelecionada = null;
                 }
-                int color = (holder.selected ? R.color.colorPrimaryDark : R.color.colorAccent);
+                int color = (holder.selected ? R.color.quantum_bluegrey100 : R.color.quantum_white_100);
                 holder.itemView.setBackgroundColor(ContextCompat.getColor(v.getContext(), color));
-                holder.getPontoRef().setText("PONTO DA MERDA");
                 notifyDataSetChanged();
             }
         });

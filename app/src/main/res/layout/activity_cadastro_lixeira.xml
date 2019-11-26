@@ -52,7 +52,6 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Nome dalixeira"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/nome_fic_id"
@@ -65,7 +64,6 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Rua de teste"
         app:layout_constraintStart_toStartOf="@+id/endereco_id"
         app:layout_constraintTop_toBottomOf="@+id/endereco_id" />
 
@@ -76,7 +74,6 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Praça da Referência"
         app:layout_constraintStart_toStartOf="@+id/ponto_ref_id"
         app:layout_constraintTop_toBottomOf="@+id/ponto_ref_id" />
 
@@ -87,7 +84,6 @@
         android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="80"
         app:layout_constraintStart_toStartOf="@+id/cap_total_id"
         app:layout_constraintTop_toBottomOf="@+id/cap_total_id" />
 
@@ -105,9 +101,10 @@
 
         <Button
             android:id="@+id/btn_salvar_lixeira"
+            style="@style/DefaultButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Salvar Lixeira" />
+            android:text="SALVAR LIXEIRA" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

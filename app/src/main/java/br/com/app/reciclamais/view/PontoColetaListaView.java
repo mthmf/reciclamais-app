@@ -5,8 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 import br.com.app.reciclamais.R;
 import br.com.app.reciclamais.ReciclaApplication;
@@ -19,44 +23,25 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+public class PontoColetaListaView extends Activity  {
 
-import java.util.List;
+    @BindView(R.id.recycler_pontos)
+    public RecyclerView recyclerPontos;
 
-public class RotaView extends Activity  {
-
-    @BindView(R.id.btn_salvar_rota)
+    @BindView(R.id.btn_select)
     public Button btnSalvarRota;
 
-    @BindView(R.id.rota_data_inicio)
-    public TextView rotaDataInicio;
-
-    @BindView(R.id.rota_data_fim)
-    public TextView rotaDataFim;
-
-    @BindView(R.id.edit_descricao)
-    public EditText editDescricao;
-
-    @BindView(R.id.edit_data_inicio)
-    public EditText editDataInicio;
-
-    @BindView(R.id.edit_data_fim)
-    public EditText editDataFim;
-
-    @BindView(R.id.recycler_lixeiras_rota)
-    public RecyclerView recyclerLixeirasRota;
-
     private List<Lixeira> lixeiras;
-
     private LixeiraAdapter adapter;
+    private Rota rota;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro_rota);
+        setContentView(R.layout.activity_lista_ponto_coleta);
         ButterKnife.bind(this);
+        rota = (Rota) getIntent().getExtras().getSerializable("rota");
+
     }
 
     @Override
@@ -71,16 +56,12 @@ public class RotaView extends Activity  {
             @Override
             public void onClick(View v) {
                 if(adapter.getLixeiraSelecionada() == null){
-                    new AlertDialog.Builder(RotaView.this)
+                    new AlertDialog.Builder(PontoColetaListaView.this)
                             .setTitle("Selecione uma lixeira para associar a rota")
                             .setMessage("Pelo menos uma lixeira deve ser associada a rota cadastrada")
                             .setPositiveButton("OK", null)
                             .show();
                 }
-                Rota rota = new Rota();
-                rota.setDescricao(editDescricao.getText().toString());
-                rota.setDataInicio("2019-09-24 21:25:55");
-                rota.setDataFinal("2019-09-24 21:25:55");
 
                 Call<Integer> callRota = ReciclaApplication.getInstance().getAPI().cadastraRota(rota);
                 callRota.enqueue(new Callback<Integer>() {
@@ -107,7 +88,7 @@ public class RotaView extends Activity  {
 
 
                         } else {
-                            new AlertDialog.Builder(RotaView.this)
+                            new AlertDialog.Builder(PontoColetaListaView.this)
                                     .setTitle("Ocorreu um erro ao cadastrar o agendamento")
                                     .setMessage("Favor tente novamente mais tarde.")
                                     .setPositiveButton("OK", null)
@@ -132,15 +113,15 @@ public class RotaView extends Activity  {
                 lixeiras = response.body();
 
                 // Seta as lixeiras disponíveis
-                adapter = new LixeiraAdapter(lixeiras, RotaView.this);
-                recyclerLixeirasRota.setAdapter(adapter);
-                RecyclerView.LayoutManager layout = new LinearLayoutManager(RotaView.this, RecyclerView.VERTICAL, false);
-                recyclerLixeirasRota.setLayoutManager(layout);
+                adapter = new LixeiraAdapter(lixeiras, PontoColetaListaView.this);
+                recyclerPontos.setAdapter(adapter);
+                RecyclerView.LayoutManager layout = new LinearLayoutManager(PontoColetaListaView.this, RecyclerView.VERTICAL, false);
+                recyclerPontos.setLayoutManager(layout);
             }
 
             @Override
             public void onFailure(Call<List<Lixeira>> call, Throwable t) {
-                Log.e("Não foi possível buscar os produtos do carrinho", "Erro ao buscar produtos do carrinho"+ t.getMessage());
+                Log.e("Não foi possível buscar os produtos do carrinho", "Erro ao buscar pontos de coleta"+ t.getMessage());
             }
         });
 

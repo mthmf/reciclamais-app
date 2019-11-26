@@ -51,9 +51,10 @@
 
         <Button
             android:id="@+id/btn_localizacao"
+            style="@style/DefaultButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Salvar localizacao" />
+            android:text="SALVAR LOCALIZAÇÃO" />
     </LinearLayout>
 
 

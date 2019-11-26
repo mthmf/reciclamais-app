@@ -34,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RealizaBaixaView extends Activity {
+public class BaixaCarrinhoView extends Activity {
 
     @BindView(R.id.text_criacao_id_baixa)
     public TextView textCriacaoId;
@@ -49,8 +49,7 @@ public class RealizaBaixaView extends Activity {
     public TextView textCriacao;
 
     @BindView(R.id.text_total_carrinho_baixa)
-    public TextView  textTotalCarrinho;
-
+    public TextView textTotalCarrinho;
 
     @BindView(R.id.lixeira_titulo)
     public TextView lixeiraTitulo;
@@ -68,10 +67,10 @@ public class RealizaBaixaView extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_realizar_baixa);
+        setContentView(R.layout.activity_baixa_carrinho);
         ButterKnife.bind(this);
 
-        if(getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             carrinho = (Carrinho) getIntent().getExtras().getSerializable("carrinho");
         }
     }
@@ -82,10 +81,10 @@ public class RealizaBaixaView extends Activity {
         startElements();
     }
 
-    public void startElements(){
+    public void startElements() {
 
-        if(carrinho == null){
-            Call<Carrinho> call =  ReciclaApplication.getInstance().getAPI().buscaCarrinhoAtual(Session.getInstance().getUsuario());
+        if (carrinho == null) {
+            Call<Carrinho> call = ReciclaApplication.getInstance().getAPI().buscaCarrinhoAtual(Session.getInstance().getUsuario());
             call.enqueue(new Callback<Carrinho>() {
                 @Override
                 public void onResponse(Call<Carrinho> call, Response<Carrinho> response) {
@@ -97,7 +96,7 @@ public class RealizaBaixaView extends Activity {
 
                 @Override
                 public void onFailure(Call<Carrinho> call, Throwable t) {
-                    Log.e("Não foi possível buscar o carrinho", "Erro ao buscar carrinho"+ t.getMessage());
+                    Log.e("Não foi possível buscar o carrinho", "Erro ao buscar carrinho" + t.getMessage());
                 }
             });
         } else {
@@ -109,8 +108,8 @@ public class RealizaBaixaView extends Activity {
         btnConfirmarBaixa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(adapter.getLixeiraSelecionada() == null){
-                    new AlertDialog.Builder(RealizaBaixaView.this)
+                if (adapter.getLixeiraSelecionada() == null) {
+                    new AlertDialog.Builder(BaixaCarrinhoView.this)
                             .setTitle("Selecione uma lixeira para fazer a baixa")
                             .setMessage("Não foi possível fazer a baixa")
                             .setPositiveButton("OK", null)
@@ -129,39 +128,38 @@ public class RealizaBaixaView extends Activity {
                     @Override
                     public void onResponse(Call<Integer> call, Response<Integer> response) {
                         System.out.println(" Código " + response.code());
-                        if(response.code()== 201){
+                        if (response.code() == 201) {
                             carrinho.setAtivo(Boolean.FALSE);
                             Call<Carrinho> carrinhoCall = ReciclaApplication.getInstance().getAPI().alteraCarrinho(carrinho);
                             carrinhoCall.enqueue(new Callback<Carrinho>() {
                                 @Override
                                 public void onResponse(Call<Carrinho> call, Response<Carrinho> response) {
                                     carrinho = response.body();
-                                    if(response.code()== 200){
+                                    if (response.code() == 200) {
                                         System.out.println("FOI " + carrinho.getAtivo());
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(Call<Carrinho> call, Throwable t) {
-                                    Log.e("Não foi possível buscar os produtos do carrinho", "Erro ao buscar produtos do carrinho"+ t.getMessage());
+                                    Log.e("Não foi possível buscar os produtos do carrinho", "Erro ao buscar produtos do carrinho" + t.getMessage());
 
                                 }
                             });
 
 
-
-                            new AlertDialog.Builder(RealizaBaixaView.this)
+                            new AlertDialog.Builder(BaixaCarrinhoView.this)
                                     .setTitle("Baixa realizada")
                                     .setMessage("Baixa foi realizada com sucesso.")
                                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
-                                            Intent intent = new Intent(RealizaBaixaView.this, MenuView.class);
+                                            Intent intent = new Intent(BaixaCarrinhoView.this, MenuView.class);
                                             startActivity(intent);
                                         }
                                     })
                                     .show();
                         } else {
-                            new AlertDialog.Builder(RealizaBaixaView.this)
+                            new AlertDialog.Builder(BaixaCarrinhoView.this)
                                     .setTitle("Ocorreu um erro ao cadastrar o agendamento")
                                     .setMessage("Favor tente novamente mais tarde.")
                                     .setPositiveButton("OK", null)
@@ -171,7 +169,7 @@ public class RealizaBaixaView extends Activity {
 
                     @Override
                     public void onFailure(Call<Integer> call, Throwable t) {
-                        Log.e("Erro ao cadastrar baixa", "Erro ao cadastrar baixa"+ t.getMessage());
+                        Log.e("Erro ao cadastrar baixa", "Erro ao cadastrar baixa" + t.getMessage());
                     }
                 });
 
@@ -186,15 +184,15 @@ public class RealizaBaixaView extends Activity {
                 lixeiras = response.body();
 
                 // Seta as lixeiras disponíveis
-                adapter = new LixeiraAdapter(lixeiras, RealizaBaixaView.this);
+                adapter = new LixeiraAdapter(lixeiras, BaixaCarrinhoView.this);
                 recyclerLixeira.setAdapter(adapter);
-                RecyclerView.LayoutManager layout = new LinearLayoutManager(RealizaBaixaView.this, RecyclerView.VERTICAL, false);
+                RecyclerView.LayoutManager layout = new LinearLayoutManager(BaixaCarrinhoView.this, RecyclerView.VERTICAL, false);
                 recyclerLixeira.setLayoutManager(layout);
             }
 
             @Override
             public void onFailure(Call<List<Lixeira>> call, Throwable t) {
-                Log.e("Não foi possível buscar os produtos do carrinho", "Erro ao buscar produtos do carrinho"+ t.getMessage());
+                Log.e("Não foi possível buscar os produtos do carrinho", "Erro ao buscar produtos do carrinho" + t.getMessage());
             }
         });
     }

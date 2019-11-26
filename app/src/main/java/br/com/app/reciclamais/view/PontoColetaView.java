@@ -14,7 +14,6 @@ import androidx.appcompat.app.AlertDialog;
 
 import java.math.BigDecimal;
 
-import br.com.app.reciclamais.MainActivity;
 import br.com.app.reciclamais.R;
 import br.com.app.reciclamais.ReciclaApplication;
 import br.com.app.reciclamais.model.Lixeira;
@@ -24,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LixeiraView extends Activity {
+public class PontoColetaView extends Activity {
 
     @BindView(R.id.edit_nome_fic)
     public EditText editNomeFic;
@@ -72,17 +71,17 @@ public class LixeiraView extends Activity {
                     @Override
                     public void onResponse(Call<Integer> call, Response<Integer> response) {
                         if(response.code() != 201){
-                            new AlertDialog.Builder(LixeiraView.this)
+                            new AlertDialog.Builder(PontoColetaView.this)
                                     .setTitle("Não foi possível cadastrar a lixeira")
                                     .setMessage("Ocorreu um problema ao realizar o cadastro")
                                     .setPositiveButton("OK", null)
                                     .show();
                         } else {
-                            new AlertDialog.Builder(LixeiraView.this)
+                            new AlertDialog.Builder(PontoColetaView.this)
                                     .setTitle("Lixeira cadastrada com sucesso")
                                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
-                                            Intent intent = new Intent(LixeiraView.this, MenuView.class);
+                                            Intent intent = new Intent(PontoColetaView.this, MenuView.class);
                                             startActivity(intent);
                                         }
                                     })                                    .show();

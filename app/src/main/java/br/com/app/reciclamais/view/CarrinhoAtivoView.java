@@ -12,19 +12,14 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.app.reciclamais.R;
 import br.com.app.reciclamais.ReciclaApplication;
-import br.com.app.reciclamais.adapter.ListaProdutoCarrinhoAdapter;
-import br.com.app.reciclamais.commons.OnItemClickListener;
+import br.com.app.reciclamais.adapter.ProdutoCarrinhoAdapter;
 import br.com.app.reciclamais.commons.Session;
 import br.com.app.reciclamais.model.Carrinho;
-import br.com.app.reciclamais.model.Lixeira;
 import br.com.app.reciclamais.model.Produto;
 import br.com.app.reciclamais.util.Util;
 import butterknife.BindView;
@@ -80,7 +75,7 @@ public class CarrinhoAtivoView extends Activity implements View.OnClickListener 
         btnFechaCarrinho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), RealizaBaixaView.class);
+                Intent intent = new Intent(v.getContext(), BaixaCarrinhoView.class);
                 intent.putExtra("carrinho", carrinho);
                 startActivity(intent);
             }
@@ -120,7 +115,7 @@ public class CarrinhoAtivoView extends Activity implements View.OnClickListener 
             public void onResponse(Call<List<Produto>> call, Response<List<Produto>> response) {
                 produtos = response.body();
                 // Seta os produtos
-                recyclerView.setAdapter(new ListaProdutoCarrinhoAdapter(produtos));
+                recyclerView.setAdapter(new ProdutoCarrinhoAdapter(produtos));
                 RecyclerView.LayoutManager layout = new LinearLayoutManager(CarrinhoAtivoView.this, RecyclerView.VERTICAL, false);
                 recyclerView.setLayoutManager(layout);
             }

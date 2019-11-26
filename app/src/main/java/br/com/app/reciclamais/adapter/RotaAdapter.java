@@ -50,12 +50,13 @@ public class RotaAdapter extends RecyclerView.Adapter {
             public void onClick(View v) {
                 holder.selected = !holder.selected;
                 System.out.println("Posição "+  position);
+
                 if(holder.selected && rotaSelecionada == null){
                     rotaSelecionada = rotas.get(position);
                 } else {
                     rotaSelecionada = null;
                 }
-                int color = (holder.selected ? R.color.colorPrimaryDark : R.color.colorAccent);
+                int color = (holder.selected ? R.color.quantum_bluegrey100 : R.color.quantum_white_100);
                 holder.itemView.setBackgroundColor(ContextCompat.getColor(v.getContext(), color));
                 notifyDataSetChanged();
             }

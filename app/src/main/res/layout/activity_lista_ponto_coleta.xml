@@ -7,42 +7,46 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="0dp"
+        android:id="@+id/linearLayout5"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-        <TextView
-            android:id="@+id/rotas_titulo"
-            style="@style/DefaultItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:text="Rotas disponiveis para a baixa diaria" />
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_rotas"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/text_pontos_text"
+            style="@style/DefaultItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Pontos de Coleta" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_pontos"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
+        app:layout_constraintVertical_bias="1.0">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
         android:id="@+id/linearLayout6"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
@@ -53,10 +57,11 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/button_realiza_baixa"
+            android:id="@+id/btn_select"
             style="@style/DefaultButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="REALIZAR BAIXA" />
+            android:text="SALVAR PONTO" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

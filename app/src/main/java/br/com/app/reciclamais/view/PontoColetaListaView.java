@@ -40,8 +40,9 @@ public class PontoColetaListaView extends Activity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_ponto_coleta);
         ButterKnife.bind(this);
-        rota = (Rota) getIntent().getExtras().getSerializable("rota");
-
+        if(getIntent().getExtras() != null ){
+            rota = (Rota) getIntent().getExtras().getSerializable("rota");
+        }
     }
 
     @Override
@@ -51,6 +52,10 @@ public class PontoColetaListaView extends Activity  {
     }
 
     public void startElements(){
+
+        if(rota == null){
+            btnSalvarRota.setVisibility(View.GONE);
+        }
 
         btnSalvarRota.setOnClickListener(new View.OnClickListener() {
             @Override

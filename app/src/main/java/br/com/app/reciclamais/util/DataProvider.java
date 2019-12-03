@@ -1,5 +1,6 @@
 package br.com.app.reciclamais.util;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,27 +25,105 @@ public class DataProvider {
     public DataProvider(){
         iniciaListaUsuario();
         iniciaListaRota();
+        iniciaListaProduto();
     }
 
 
     public void iniciaListaBaixaCarrinho(){
         listaBaixaCarrinho = new ArrayList<>();
 
+
     }
     public void iniciaListaBaixaRota(){
         listaBaixaRota = new ArrayList<>();
     }
+
     public void iniciaListaCarrinho(){
         listaCarrinho = new ArrayList<>();
     }
 
     public void iniciaListaLixeira(){
         listaLixeira = new ArrayList<>();
+
+        Lixeira lixeira = new Lixeira();
+        lixeira.setCodigo(1);
+        lixeira.setPontoReferencia("Igreja matriz");
+        lixeira.setCapacidadeTotal(new BigDecimal(100));
+        lixeira.setEndereco("R. Frieda Weber, Fortaleza");
+        lixeira.setLatitude("-26.878937");
+        lixeira.setLongitude("-49.067446");
+
+
+        Lixeira lixeira2 = new Lixeira();
+        lixeira2.setCodigo(2);
+        lixeira2.setPontoReferencia("Atêlie Papel");
+        lixeira2.setCapacidadeTotal(new BigDecimal(100));
+        lixeira2.setEndereco("R. Francisco Vahldieck - Fortaleza");
+        lixeira2.setLatitude("-26.875856");
+        lixeira2.setLongitude("-49.065354");
+
+        Lixeira lixeira3 = new Lixeira();
+        lixeira3.setCodigo(3);
+        lixeira3.setPontoReferencia("Atêlie Papel");
+        lixeira3.setCapacidadeTotal(new BigDecimal(100));
+        lixeira3.setEndereco("R. Fritz Koegler - Fortaleza");
+        lixeira3.setLatitude("-26.875248");
+        lixeira3.setLongitude("-49.066825");
+
+        listaLixeira.add(lixeira);
+        listaLixeira.add(lixeira2);
+        listaLixeira.add(lixeira3);
     }
 
+
+
     public void iniciaListaProduto(){
+
         listaProduto = new ArrayList<>();
+        Produto produto = new Produto();
+        produto.setCodigo(1);
+        produto.setIdentificador("PRV-01-CAFE-BR");
+        produto.setNome("Cafe solúvel");
+        produto.setNomeFabricante("Caboclo");
+        produto.setPeso(new BigDecimal(1.0));
+
+        Produto produto2 = new Produto();
+        produto2.setCodigo(2);
+        produto2.setIdentificador("PRV-02-FILTRO-CAFE-BR");
+        produto2.setNome("Filtro de Café");
+        produto2.setNomeFabricante("Melitta");
+        produto2.setPeso(new BigDecimal(0.503));
+
+        Produto produto3 = new Produto();
+        produto3.setCodigo(3);
+        produto3.setIdentificador("PRV-03-SABAO-PO-BR");
+        produto3.setNome("Sabão em pó");
+        produto3.setNomeFabricante("Omo");
+        produto3.setPeso(new BigDecimal(0.900));
+
+        Produto produto4 = new Produto();
+        produto4.setCodigo(4);
+        produto4.setIdentificador("PRV-04-AGUA-SANITARIA-BR");
+        produto4.setNome("Água sanitária");
+        produto4.setNomeFabricante("Cruzado");
+        produto4.setPeso(new BigDecimal(0.098));
+
+        Produto produto5 = new Produto();
+        produto5.setCodigo(5);
+        produto5.setIdentificador("PRV-05-DETERGENTE-BR");
+        produto5.setNome("Detergente");
+        produto5.setNomeFabricante("Limpol");
+        produto5.setPeso(new BigDecimal(0.500));
+
+
+        listaProduto.add(produto);
+        listaProduto.add(produto2);
+        listaProduto.add(produto3);
+        listaProduto.add(produto4);
+        listaProduto.add(produto5);
     }
+
+
 
     public void iniciaListaRota(){
         listaRota = new ArrayList<>();

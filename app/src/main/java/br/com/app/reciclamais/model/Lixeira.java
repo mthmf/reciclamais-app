@@ -18,7 +18,7 @@ public class Lixeira implements Serializable {
     private Integer rota;
 
     public Integer getCodigo() {
-        return codigo;
+        return codigo == null? 0:codigo;
     }
 
     public void setCodigo(Integer codigo) {

@@ -33,8 +33,9 @@ public class PontoColetaMapView extends FragmentActivity implements OnMapReadyCa
     @BindView(R.id.btn_localizacao)
     public Button btnLocalizacao;
 
-    private LatLng local;
     private GoogleMap map;
+    private LatLng local;
+    private LatLng startLocal = new LatLng(-26.864636, -49.055920);
     private Lixeira lixeira;
 
     @Override
@@ -42,6 +43,11 @@ public class PontoColetaMapView extends FragmentActivity implements OnMapReadyCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa_lixeira);
         ButterKnife.bind(this);
+        if(getIntent().getExtras() != null){
+            lixeira = (Lixeira) getIntent().getExtras().getSerializable("lixeira");
+        } else {
+            lixeira = new Lixeira();
+        }
     }
 
     @Override
@@ -51,7 +57,6 @@ public class PontoColetaMapView extends FragmentActivity implements OnMapReadyCa
     }
 
     public void startElements(){
-        lixeira = new Lixeira();
         local = null;
         // Set up Google Maps
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -80,54 +85,48 @@ public class PontoColetaMapView extends FragmentActivity implements OnMapReadyCa
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
         map.clear(); //clear old markers
 
+        if(lixeira != null && lixeira.getCodigo() > 0){
+            btnLocalizacao.setVisibility(View.GONE);
+            startLocal = new LatLng(Double.valueOf(lixeira.getLatitude()),
+                    Double.valueOf(lixeira.getLongitude()));
+            createCameraPosition();
+            map.addMarker(new MarkerOptions().position(startLocal).title(lixeira.getNomeFicticio()));
+        } else {
+            createCameraPosition();
+            map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(LatLng point) {
+                    map.clear();
+                    local = point;
+                    Geocoder geocoder = new Geocoder(PontoColetaMapView.this, Locale.getDefault());
+                    try {
+                        List<Address> address = geocoder.getFromLocation(point.latitude, point.longitude, 1);
+                        String endereco = address.get(0).getAddressLine(0);
+                        map.addMarker(new MarkerOptions().position(point).title(endereco));
+
+                        // Seta para lixeira
+                        lixeira.setEndereco(address.get(0).getAddressLine(0));
+                        lixeira.setLatitude(String.valueOf(point.latitude));
+                        lixeira.setLongitude(String.valueOf(point.longitude));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.w("My Current loction address", "Canont get Address!");
+                    }
+                }
+            });
+        }
+    }
+
+    private void createCameraPosition() {
         CameraPosition googlePlex = CameraPosition.builder()
-                .target(new LatLng(-26.864636, -49.055920))
+                .target(startLocal)
                 .zoom(20)
                 .bearing(10)
                 .tilt(30)
                 .build();
-
         map.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 100, null);
-
-       /* map.addMarker(new MarkerOptions()
-                .position(new LatLng(37.4219999, -122.0862462))
-                .title("Spider Man")
-                .snippet("His Talent : Plenty of money"));
-
-        map.addMarker(new MarkerOptions()
-                .position(new LatLng(37.4629101,-122.2449094))
-                .title("Iron Man")
-                .snippet("His Talent : Plenty of money"));
-
-        map.addMarker(new MarkerOptions()
-                .position(new LatLng(37.3092293,-122.1136845))
-                .title("Captain America"));*/
-
-        //map.setMyLocationEnabled(true);
-        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng point) {
-                map.clear();
-                local = point;
-                Geocoder geocoder = new Geocoder(PontoColetaMapView.this, Locale.getDefault());
-                try {
-                    List<Address> address = geocoder.getFromLocation(point.latitude, point.longitude, 1);
-                    String endereco = address.get(0).getAddressLine(0);
-                    map.addMarker(new MarkerOptions().position(point).title(endereco));
-
-                    // Seta para lixeira
-                    lixeira.setEndereco(address.get(0).getAddressLine(0));
-                    lixeira.setLatitude(String.valueOf(point.latitude));
-                    lixeira.setLongitude(String.valueOf(point.longitude));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.w("My Current loction address", "Canont get Address!");
-                }
-            }
-        });
     }
 
 }

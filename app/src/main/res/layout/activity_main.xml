@@ -132,6 +132,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="48dp"
         android:autoLink="all"
+        android:text="Não possui login? Cadastra-se"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -150,7 +152,7 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="155dp"
             android:layout_marginTop="8dp"
             android:layout_weight="0"
             android:src="@drawable/logo_transparent" />

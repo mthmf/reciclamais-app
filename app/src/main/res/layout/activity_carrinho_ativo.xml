@@ -33,7 +33,7 @@
                     style="@style/DefaultItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="36dp"
+                    android:layout_marginStart="28dp"
                     android:text="Data de criação"
                     app:layout_constraintStart_toEndOf="@+id/image_carrinho"
                     app:layout_constraintTop_toTopOf="@+id/image_carrinho" />

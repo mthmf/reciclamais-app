@@ -54,6 +54,7 @@ public class MenuView extends AppCompatActivity implements NavigationView.OnNavi
                 menu.findItem(R.id.nav_item_cad_rota).setVisible(false);
                 menu.findItem(R.id.nav_item_baixa).setVisible(true);
                 menu.findItem(R.id.nav_item_baixa_rota).setVisible(false);
+                menu.findItem(R.id.nav_item_consulta_ponto).setVisible(true);
             } else if(PerfilEnum.COLETADOR.getCodigo().equals(usuario.getPerfil())) {
                 menu.findItem(R.id.nav_item_carrinho_ativo).setVisible(true);
                 menu.findItem(R.id.nav_item_novo_produto).setVisible(true);
@@ -61,6 +62,7 @@ public class MenuView extends AppCompatActivity implements NavigationView.OnNavi
                 menu.findItem(R.id.nav_item_cad_rota).setVisible(true);
                 menu.findItem(R.id.nav_item_baixa).setVisible(true);
                 menu.findItem(R.id.nav_item_baixa_rota).setVisible(true);
+                menu.findItem(R.id.nav_item_consulta_ponto).setVisible(true);
             }
         } else {
             menu.findItem(R.id.nav_item_carrinho_ativo).setVisible(false);
@@ -69,6 +71,7 @@ public class MenuView extends AppCompatActivity implements NavigationView.OnNavi
             menu.findItem(R.id.nav_item_cad_rota).setVisible(false);
             menu.findItem(R.id.nav_item_baixa).setVisible(false);
             menu.findItem(R.id.nav_item_baixa_rota).setVisible(false);
+            menu.findItem(R.id.nav_item_consulta_ponto).setVisible(false);
         }
 
     }
@@ -116,6 +119,11 @@ public class MenuView extends AppCompatActivity implements NavigationView.OnNavi
             }
             case R.id.nav_item_baixa_rota: {
                 Intent intent = new Intent(this, BaixaRotaListaView.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.nav_item_consulta_ponto: {
+                Intent intent = new Intent(this, PontoColetaListaView.class);
                 startActivity(intent);
                 break;
             }

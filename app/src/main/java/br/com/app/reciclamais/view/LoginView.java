@@ -14,7 +14,6 @@ import androidx.appcompat.app.AlertDialog;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import br.com.app.reciclamais.MainActivity;
 import br.com.app.reciclamais.R;
 import br.com.app.reciclamais.ReciclaApplication;
 import br.com.app.reciclamais.commons.Session;
@@ -196,9 +195,9 @@ public class LoginView extends Activity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    pwdLayout.setHint("Informe a password");
+                    pwdLayout.setHint("Informe a senha");
                 } else {
-                    pwdLayout.setHint("Password");
+                    pwdLayout.setHint("Senha");
                 }
             }
         });

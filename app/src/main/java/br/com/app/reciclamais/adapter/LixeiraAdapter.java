@@ -1,6 +1,7 @@
 package br.com.app.reciclamais.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import java.util.List;
 import br.com.app.reciclamais.R;
 import br.com.app.reciclamais.holder.LixeiraHolder;
 import br.com.app.reciclamais.model.Lixeira;
+import br.com.app.reciclamais.view.PontoColetaListaView;
+import br.com.app.reciclamais.view.PontoColetaMapView;
 
 
 public class LixeiraAdapter extends RecyclerView.Adapter {
@@ -21,7 +24,6 @@ public class LixeiraAdapter extends RecyclerView.Adapter {
     private List<Lixeira> lixeiras;
     private Context context;
     private Lixeira lixeiraSelecionada;
-
 
     public LixeiraAdapter(List<Lixeira> lixeiras, Context context){
         this.lixeiras = lixeiras;
@@ -44,6 +46,16 @@ public class LixeiraAdapter extends RecyclerView.Adapter {
         holder.getPontoRef().setText(lixeira.getPontoReferencia());
         holder.getCapTotal().setText(String.valueOf(lixeira.getCapacidadeTotal()));
         holder.getCapAtual().setText(String.valueOf(lixeira.getCapacidadeAtual()));
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                System.out.println("PASSOU NO LONG ");
+                Intent intent = new Intent(v.getContext(), PontoColetaMapView.class);
+                intent.putExtra("lixeira", lixeira);
+                v.getContext().startActivity(intent);
+                return true;
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

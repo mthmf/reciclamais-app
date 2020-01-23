@@ -1,7 +1,5 @@
 package br.com.app.reciclamais.model;
 
-import android.os.Parcelable;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 

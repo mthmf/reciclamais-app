@@ -1,6 +1,7 @@
 package br.com.app.reciclamais.util;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,13 +27,14 @@ public class DataProvider {
         iniciaListaUsuario();
         iniciaListaRota();
         iniciaListaProduto();
+        iniciaListaLixeira();
+        iniciaListaBaixaRota();
+        iniciaListaCarrinho();
+        iniciaListaBaixaCarrinho();
     }
-
 
     public void iniciaListaBaixaCarrinho(){
         listaBaixaCarrinho = new ArrayList<>();
-
-
     }
     public void iniciaListaBaixaRota(){
         listaBaixaRota = new ArrayList<>();
@@ -40,6 +42,23 @@ public class DataProvider {
 
     public void iniciaListaCarrinho(){
         listaCarrinho = new ArrayList<>();
+
+        Carrinho carrinho = new Carrinho();
+        carrinho.setCodigo(1);
+        carrinho.setTotalPesoReciclavel(new BigDecimal(100));
+        carrinho.setDataCriacao(Util.getDate(LocalDateTime.now()));
+        carrinho.setUsuario(1);
+        carrinho.setAtivo(true);
+
+        Carrinho carrinho2 = new Carrinho();
+        carrinho2.setCodigo(1);
+        carrinho2.setTotalPesoReciclavel(new BigDecimal(100));
+        carrinho2.setDataCriacao(Util.getDate(LocalDateTime.now()));
+        carrinho2.setUsuario(2);
+        carrinho2.setAtivo(true);
+
+        listaCarrinho.add(carrinho);
+        listaCarrinho.add(carrinho2);
     }
 
     public void iniciaListaLixeira(){
@@ -74,8 +93,6 @@ public class DataProvider {
         listaLixeira.add(lixeira2);
         listaLixeira.add(lixeira3);
     }
-
-
 
     public void iniciaListaProduto(){
 
@@ -123,8 +140,6 @@ public class DataProvider {
         listaProduto.add(produto5);
     }
 
-
-
     public void iniciaListaRota(){
         listaRota = new ArrayList<>();
         Rota rota = new Rota();
@@ -154,18 +169,21 @@ public class DataProvider {
     public void iniciaListaUsuario(){
         listaUsuario = new ArrayList<>();
         Usuario usuario = new Usuario();
+        usuario.setCodigo(1);
         usuario.setEmail("teste@teste.com.br");
         usuario.setSenha("123456");
         usuario.setCpf("31778364004");
         usuario.setNome("USUARIO TESTE 1");
 
         Usuario usuario2 = new Usuario();
+        usuario.setCodigo(2);
         usuario2.setEmail("teste2@teste2.com.br");
         usuario2.setSenha("123456");
         usuario2.setCpf("39838825018");
         usuario2.setNome("USUARIO TESTE 2");
 
         Usuario usuario3 = new Usuario();
+        usuario.setCodigo(3);
         usuario3.setEmail("teste3@teste3.com.br");
         usuario3.setSenha("123456");
         usuario3.setCpf("29224858031");
@@ -175,4 +193,31 @@ public class DataProvider {
         listaUsuario.add(usuario2);
         listaUsuario.add(usuario3);
     }
+
+    public boolean buscaUsuario(final Usuario usuario){
+        for(Usuario user: listaUsuario){
+            if(user.getEmail() == usuario.getEmail() && user.getSenha() == usuario.getSenha()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<Carrinho> buscaCarrinho(final Usuario usuario){
+        return null;
+    }
+
+    public boolean adicionaUsuario(Usuario usuario){
+        return listaUsuario.add(usuario);
+    }
+
+    public boolean adicionaRota(Rota rota){ return listaRota.add(rota); }
+
+    public boolean adicionaLixeira(Lixeira lixeira) { return listaLixeira.add(lixeira); }
+
+    public boolean adicionaCarrinho(Carrinho carrinho){ return listaCarrinho.add(carrinho); }
+
+    public boolean adicionaBaixaRota(BaixaRota baixaRota) { return listaBaixaRota.add(baixaRota);}
+
+    public boolean adicionarBaixaCarrinho(BaixaCarrinho baixaCarrinho) { return listaBaixaCarrinho.add(baixaCarrinho);}
 }

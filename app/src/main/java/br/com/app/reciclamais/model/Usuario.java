@@ -14,6 +14,8 @@ public class Usuario {
         return codigo;
     }
 
+    public void setCodigo(Integer codigo){ this.codigo = codigo;}
+
     public String getCpf() {
         return cpf;
     }

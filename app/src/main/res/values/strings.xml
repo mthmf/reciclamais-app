@@ -2,4 +2,35 @@
     <string name="app_name">reciclamais</string>
     <string name="open_drawer">Abrir</string>
     <string name="close_drawer">Fechar</string>
+    <string name="salvar">Salvar</string>
+    <string name="login">Login</string>
+    <string name="ok">Login</string>
+
+
+    <!-- Hints e Label -->
+    <!-- Login-->
+    <string name="cpf">CPF</string>
+    <string name="inf_cpf">Informe o CPF</string>
+    <string name="nome">Nome</string>
+    <string name="inf_nome">Informe o nome</string>
+    <string name="email">E-mail</string>
+    <string name="inf_email">Informe o e-mail</string>
+    <string name="senha">E-mail</string>
+    <string name="inf_senha">Informe a senha </string>
+    <string name="criar_conta">Não possui uma conta? Crie agora!</string>
+    <string name="fazer_login">Já é cadastrado? Faça seu login!</string>
+
+
+    <!-- Mensagens de erro-->
+    <string name="msg_usuario_senha_incorreto">Usuário ou senha incorretos</string>
+    <string name="msg_nao_login">Não foi possível realizar o login</string>
+    <string name="msg_usuario_ja_cadastrado">CPF ou E-mail já cadastrado</string>
+    <string name="msg_usuario_nao_cadastrado">Não foi possível cadastrar o usuário</string>
+    <string name="msg_usuario_cadastrado_sucesso">Usuário cadastrado com sucesso</string>
+
+
+
+
+
+
 </resources>

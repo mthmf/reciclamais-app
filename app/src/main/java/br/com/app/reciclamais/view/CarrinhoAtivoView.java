@@ -28,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CarrinhoAtivoView extends Activity implements View.OnClickListener {
+public class CarrinhoAtivoView extends AbstractView implements View.OnClickListener {
 
     @BindView(R.id.text_criacao_id)
     public TextView textCriacaoId;
@@ -81,26 +81,29 @@ public class CarrinhoAtivoView extends Activity implements View.OnClickListener 
             }
         });
 
-        Call<Carrinho> call =  ReciclaApplication.getInstance().getAPI().buscaCarrinhoAtual(Session.getInstance().getUsuario());
-        call.enqueue(new Callback<Carrinho>() {
-            @Override
-            public void onResponse(Call<Carrinho> call, Response<Carrinho> response) {
-                carrinho = response.body();
+        if(Session.getInstance().getTrialVersion()) {
+            dataProvider.
+        } else {
+            Call<Carrinho> call =  ReciclaApplication.getInstance().getAPI().buscaCarrinhoAtual(Session.getInstance().getUsuario());
+            call.enqueue(new Callback<Carrinho>() {
+                @Override
+                public void onResponse(Call<Carrinho> call, Response<Carrinho> response) {
+                    carrinho = response.body();
 
-                // Seta valores do carrinho
-                textTotalCarrinho.setText(String.valueOf(carrinho.getTotalPesoReciclavel()));
-                textCriacao.setText(Util.getDate(carrinho.getDataCriacao()));
+                    // Seta valores do carrinho
+                    textTotalCarrinho.setText(String.valueOf(carrinho.getTotalPesoReciclavel()));
+                    textCriacao.setText(Util.getDate(carrinho.getDataCriacao()));
 
-                Call<List<Produto>> callProdutos =  ReciclaApplication.getInstance().getAPI().buscaProdutosCarrinho(carrinho);
-                callProdutos.enqueue(callBackProdutos());
-            }
+                    Call<List<Produto>> callProdutos =  ReciclaApplication.getInstance().getAPI().buscaProdutosCarrinho(carrinho);
+                    callProdutos.enqueue(callBackProdutos());
+                }
 
-            @Override
-            public void onFailure(Call<Carrinho> call, Throwable t) {
-                Log.e("Não foi possível buscar o carrinho", "Erro ao buscar carrinho"+ t.getMessage());
-            }
-        });
-
+                @Override
+                public void onFailure(Call<Carrinho> call, Throwable t) {
+                    Log.e("Não foi possível buscar o carrinho", "Erro ao buscar carrinho"+ t.getMessage());
+                }
+            });
+        }
     }
 
 

@@ -1,6 +1,5 @@
 package br.com.app.reciclamais.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,12 +20,11 @@ import br.com.app.reciclamais.enums.PerfilEnum;
 import br.com.app.reciclamais.model.Usuario;
 import br.com.app.reciclamais.util.MaskEditUtil;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginView extends Activity {
+public class LoginView extends AbstractView {
 
     @BindView(R.id.edit_cpf)
     public TextInputEditText editCpf;
@@ -64,13 +62,6 @@ public class LoginView extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        startElements();
     }
 
     public View.OnClickListener login() {
@@ -81,36 +72,38 @@ public class LoginView extends Activity {
                 usuario.setEmail(editEmail.getText().toString());
                 usuario.setSenha(editPwd.getText().toString());
 
-                final Context context = v.getContext();
+                if(Session.getInstance().getTrialVersion()){
+                    dataProvider.buscaUsuario(usuario);
+                } else {
+                    final Context context = v.getContext();
+                    Call<Usuario> call = ReciclaApplication.getInstance().getAPI().login(usuario);
+                    call.enqueue(new Callback<Usuario>() {
+                        @Override
+                        public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                            Usuario usuario = response.body();
+                            if (usuario == null || usuario.getCodigo() <= 0) {
 
-                Call<Usuario> call = ReciclaApplication.getInstance().getAPI().login(usuario);
-                call.enqueue(new Callback<Usuario>() {
-                    @Override
-                    public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                        Usuario usuario = response.body();
-                        if (usuario == null || usuario.getCodigo() <= 0) {
-                            System.out.println("Codigo: " + response.code());
-                            new AlertDialog.Builder(LoginView.this)
-                                    .setTitle("Usuário ou senha incorretos")
-                                    .setMessage("Não foi possível realizar o login")
-                                    .setPositiveButton("OK", null)
-                                    .show();
-                        } else {
-                            afterLoginSuccess(context, usuario);
+                                new AlertDialog.Builder(LoginView.this)
+                                        .setTitle(R.string.msg_usuario_senha_incorreto)
+                                        .setMessage("Não foi possível realizar o login")
+                                        .setPositiveButton(R.string.ok, null)
+                                        .show();
+                            } else {
+                                afterLoginSuccess(context, usuario);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Usuario> call, Throwable t) {
-                        Log.e("Não foi possível fazer o login", "Erro ao realizar login: " + t.getMessage());
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<Usuario> call, Throwable t) {
+                            Log.e("Não foi possível fazer o login", "Erro ao realizar login: " + t.getMessage());
+                        }
+                    });
+                }
             }
         };
     }
 
     public void afterLoginSuccess(Context context, Usuario usuario) {
-
         Session.getInstance().setUsuario(usuario);
         Intent intent = new Intent(context, MenuView.class);
         startActivity(intent);
@@ -126,45 +119,48 @@ public class LoginView extends Activity {
                 usuario.setEmail(editEmail.getText().toString());
                 usuario.setSenha(editPwd.getText().toString());
                 usuario.setPerfil(PerfilEnum.COMUM.getCodigo());
-                Context context = v.getContext();
 
-                Call<Integer> call = ReciclaApplication.getInstance().getAPI().sendUsuario(usuario);
-                call.enqueue(new Callback<Integer>() {
-                    @Override
-                    public void onResponse(Call<Integer> call, Response<Integer> response) {
-                        if (response.code() != 201) {
-                            System.out.println("Codigo: " + response.code());
-                            new AlertDialog.Builder(LoginView.this)
-                                    .setTitle("CPF ou E-mail já cadastrado")
-                                    .setMessage("Não foi possível cadastrar o usuário")
-                                    .setPositiveButton("OK", null)
-                                    .show();
-                        } else {
-                            new AlertDialog.Builder(LoginView.this)
-                                    .setTitle("Usuário cadastrado com sucesso")
-                                    .setPositiveButton("OK", null)
-                                    .show();
-                            textMensagem.callOnClick();
+                if(Session.getInstance().getTrialVersion()){
+                    dataProvider.adicionaUsuario(usuario);
+                } else {
+                    Call<Integer> call = ReciclaApplication.getInstance().getAPI().sendUsuario(usuario);
+                    call.enqueue(new Callback<Integer>() {
+                        @Override
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            if (response.code() != 201) {
+                                new AlertDialog.Builder(LoginView.this)
+                                        .setTitle(R.string.msg_usuario_ja_cadastrado)
+                                        .setMessage(R.string.msg_usuario_nao_cadastrado)
+                                        .setPositiveButton(R.string.ok, null)
+                                        .show();
+                            } else {
+                                new AlertDialog.Builder(LoginView.this)
+                                        .setTitle(R.string.msg_usuario_cadastrado_sucesso)
+                                        .setPositiveButton(R.string.ok,  null)
+                                        .show();
+                                textMensagem.callOnClick();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Integer> call, Throwable t) {
-                        Log.e("Usuário não cadastrado", "Erro ao cadastrar usuario" + t.getMessage());
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<Integer> call, Throwable t) {
+                            Log.e("Usuário não cadastrado", "Erro ao cadastrar usuario" + t.getMessage());
+                        }
+                    });
+                }
             }
         };
     }
 
+    @Override
     public void startListenerHints() {
         editCpf.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    cpfLayout.setHint("Informe o CPF");
+                    cpfLayout.setHint(getString(R.string.inf_cpf));
                 } else {
-                    cpfLayout.setHint("CPF");
+                    cpfLayout.setHint(getString(R.string.cpf));
                 }
             }
         });
@@ -173,9 +169,9 @@ public class LoginView extends Activity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    nomeLayout.setHint("Informe o nome");
+                    nomeLayout.setHint(getString(R.string.inf_nome));
                 } else {
-                    nomeLayout.setHint("Nome");
+                    nomeLayout.setHint(getString(R.string.nome));
                 }
             }
         });
@@ -184,9 +180,9 @@ public class LoginView extends Activity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    emailLayout.setHint("Informe o e-mail");
+                    emailLayout.setHint(getString(R.string.inf_email));
                 } else {
-                    emailLayout.setHint("E-mail");
+                    emailLayout.setHint(getString(R.string.email));
                 }
             }
         });
@@ -195,17 +191,18 @@ public class LoginView extends Activity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    pwdLayout.setHint("Informe a senha");
+                    pwdLayout.setHint(getString(R.string.inf_senha));
                 } else {
-                    pwdLayout.setHint("Senha");
+                    pwdLayout.setHint(getString(R.string.senha));
                 }
             }
         });
     }
 
+    @Override
     public void startElements() {
         novoLogin = true;
-        textMensagem.setText("Não possui uma conta? Crie agora!");
+        textMensagem.setText(R.string.criar_conta);
         editCpf.setVisibility(View.GONE);
         editNome.setVisibility(View.GONE);
         editCpf.addTextChangedListener(MaskEditUtil.mask(editCpf, MaskEditUtil.FORMAT_CPF));
@@ -217,14 +214,14 @@ public class LoginView extends Activity {
             public void onClick(View v) {
                 novoLogin = !novoLogin;
                 if (novoLogin) {
-                    textMensagem.setText("Não possui uma conta? Crie agora!");
-                    buttonLoginSave.setText("LOGIN");
+                    textMensagem.setText(R.string.criar_conta);
+                    buttonLoginSave.setText(R.string.login);
                     buttonLoginSave.setOnClickListener(login());
                     editCpf.setVisibility(View.GONE);
                     editNome.setVisibility(View.GONE);
                 } else {
-                    textMensagem.setText("Já é cadastrado? Faça seu login!");
-                    buttonLoginSave.setText("SALVAR");
+                    textMensagem.setText(R.string.fazer_login);
+                    buttonLoginSave.setText(R.string.salvar);
                     buttonLoginSave.setOnClickListener(salvarUsuario());
                     editCpf.setVisibility(View.VISIBLE);
                     editNome.setVisibility(View.VISIBLE);

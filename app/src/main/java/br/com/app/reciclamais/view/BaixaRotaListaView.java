@@ -1,6 +1,5 @@
 package br.com.app.reciclamais.view;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.app.reciclamais.R;
-import br.com.app.reciclamais.ReciclaApplication;
 import br.com.app.reciclamais.adapter.RotaAdapter;
 import br.com.app.reciclamais.model.Rota;
 import butterknife.BindView;
@@ -24,7 +22,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class BaixaRotaListaView extends Activity {
+public class BaixaRotaListaView extends AbstractView {
 
     @BindView(R.id.recycler_rotas)
     public RecyclerView recyclerRotas;
@@ -59,26 +57,11 @@ public class BaixaRotaListaView extends Activity {
             }
         });
 
-       /* rotas = new ArrayList<>();
-        Rota rota1 = new Rota();
-        rota1.setCodigo(1);
-        rota1.setDescricao("ROTA DE TESTE1");
-
-        Rota rota2 = new Rota();
-        rota2.setCodigo(2);
-        rota2.setDescricao("ROTA DE TESTE2");
-
-        rotas.add(rota1);
-        rotas.add(rota2);*/
-
-/*        adapter = new RotaAdapter(rotas, BaixaRotaListaView.this);
-        recyclerRotas.setAdapter(adapter);
-        RecyclerView.LayoutManager layout = new LinearLayoutManager(BaixaRotaListaView.this, RecyclerView.VERTICAL, false);
-        recyclerRotas.setLayoutManager(layout);*/
-
-
-        Call<List<Rota>> rotaCall =  ReciclaApplication.getInstance().getAPI().buscaRotasParaBaixa("{}");
-        rotaCall.enqueue(new Callback<List<Rota>>() {
+        if(trial){
+            dataProvider.buscaRotas();
+        } else {
+            Call<List<Rota>> rotaCall = api.buscaRotasParaBaixa("{}");
+            rotaCall.enqueue(new Callback<List<Rota>>() {
             @Override
             public void onResponse(Call<List<Rota>> call, Response<List<Rota>> response) {
                 rotas = response.body();
@@ -96,6 +79,6 @@ public class BaixaRotaListaView extends Activity {
 
             }
         });
-
+        }
     }
 }

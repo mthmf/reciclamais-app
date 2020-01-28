@@ -4,15 +4,12 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -33,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BaitaRotaView extends Activity {
+public class BaitaRotaView extends AbstractView {
 
     @BindView(R.id.btn_confirmar_baixa_rota)
     public Button btnConfirmaBaixa;
@@ -63,10 +60,10 @@ public class BaitaRotaView extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_baixa_rota_cadastro);
         ButterKnife.bind(this);
+
         dataBaixa.setText(Util.getDate(LocalDateTime.now()));
         horaChegada.addTextChangedListener(MaskEditUtil.mask(horaChegada, MaskEditUtil.FORMAT_HOUR));
         horaSaida.addTextChangedListener(MaskEditUtil.mask(horaSaida, MaskEditUtil.FORMAT_HOUR));
-
         rota = (Rota) getIntent().getExtras().getSerializable("rota");
 
     }
@@ -79,24 +76,6 @@ public class BaitaRotaView extends Activity {
 
     public void startElements() {
         baixaRota = new BaixaRota();
-
-       /* Call<List<Lixeira>> lixeirasCall = ReciclaApplication.getInstance().getAPI().buscaLixeiraDaRota(rota.getCodigo());
-        lixeirasCall.enqueue(new Callback<List<Lixeira>>() {
-            @Override
-            public void onResponse(Call<List<Lixeira>> call, Response<List<Lixeira>> response) {
-                adapter = new LixeiraAdapter(lixeiras, BaitaRotaView.this);
-                recyclerLixeira.setAdapter(adapter);
-                RecyclerView.LayoutManager layout = new LinearLayoutManager(BaitaRotaView.this, RecyclerView.VERTICAL, false);
-                recyclerLixeira.setLayoutManager(layout);
-            }
-
-            @Override
-            public void onFailure(Call<List<Lixeira>> call, Throwable t) {
-                Log.e("Não foi possível buscar as rotas do carrinho", "Erro ao buscar produtos do carrinho"+ t.getMessage());
-
-            }
-        });*/
-
 
         btnConfirmaBaixa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,37 +92,37 @@ public class BaitaRotaView extends Activity {
                 baixaRota.setDataSaida(Util.getDateTime(saidaFinal));
                 baixaRota.setDataChegada(Util.getDateTime(chegadaFinal));
 
-                Call<Integer> baixaRotaCall= ReciclaApplication.getInstance().getAPI().sendBaixaRota(baixaRota);
-                baixaRotaCall.enqueue(new Callback<Integer>() {
-                    @Override
-                    public void onResponse(Call<Integer> call, Response<Integer> response) {
-                        if(response.code() != 201){
-                            new AlertDialog.Builder(BaitaRotaView.this)
-                                    .setTitle("Não foi possível cadastrar a baixa")
-                                    .setMessage("Ocorreu um problema ao realizar a baixa")
-                                    .setPositiveButton("OK", null)
-                                    .show();
-                        } else {
-                            new AlertDialog.Builder(BaitaRotaView.this)
-                                    .setTitle("Baixa realizada com sucesso")
-                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            Intent intent = new Intent(BaitaRotaView.this, MenuView.class);
-                                            startActivity(intent);
-                                        }
-                                    }).show();
+                if(trial){
+                    dataProvider.adicionaBaixaRota(baixaRota);
+                } else {
+                    Call<Integer> baixaRotaCall = api.sendBaixaRota(baixaRota);
+                    baixaRotaCall.enqueue(new Callback<Integer>() {
+                        @Override
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            if (response.code() != 201) {
+                                new AlertDialog.Builder(BaitaRotaView.this)
+                                        .setTitle("Não foi possível cadastrar a baixa")
+                                        .setMessage("Ocorreu um problema ao realizar a baixa")
+                                        .setPositiveButton("OK", null)
+                                        .show();
+                            } else {
+                                new AlertDialog.Builder(BaitaRotaView.this)
+                                        .setTitle("Baixa realizada com sucesso")
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                Intent intent = new Intent(BaitaRotaView.this, MenuView.class);
+                                                startActivity(intent);
+                                            }
+                                        }).show();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Integer> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<Integer> call, Throwable t) {
 
-                    }
-                });
-
-
-
-
+                        }
+                    });
+                }
             }
         });
 

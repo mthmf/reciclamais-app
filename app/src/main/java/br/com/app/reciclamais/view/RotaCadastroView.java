@@ -28,7 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class RotaCadastroView extends Activity {
+public class RotaCadastroView extends AbstractView {
 
     @BindView(R.id.btn_salvar_rota)
     public Button btnSalvarRota;
@@ -62,6 +62,7 @@ public class RotaCadastroView extends Activity {
     }
 
     public void startElements() {
+
         btnSalvarRota.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

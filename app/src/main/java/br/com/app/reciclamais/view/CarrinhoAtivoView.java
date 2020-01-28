@@ -1,6 +1,5 @@
 package br.com.app.reciclamais.view;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CarrinhoAtivoView extends AbstractView implements View.OnClickListener {
+public class CarrinhoAtivoView extends AbstractView {
 
     @BindView(R.id.text_criacao_id)
     public TextView textCriacaoId;
@@ -71,7 +71,13 @@ public class CarrinhoAtivoView extends AbstractView implements View.OnClickListe
         startElements();
     }
 
+    private void setTextOnView(BigDecimal total, String dataCriacao){
+        textTotalCarrinho.setText(String.valueOf(total));
+        textCriacao.setText(Util.getDate(dataCriacao));
+    }
+
     public void startElements(){
+
         btnFechaCarrinho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,19 +88,26 @@ public class CarrinhoAtivoView extends AbstractView implements View.OnClickListe
         });
 
         if(Session.getInstance().getTrialVersion()) {
-            dataProvider.
+            carrinho = dataProvider.buscaCarrinhoAtivo(Session.getInstance().getUsuario());
+            setTextOnView(carrinho.getTotalPesoReciclavel(), carrinho.getDataCriacao());
+
+            produtos = dataProvider.buscaProdutosCarrinho(carrinho);
+            // Seta os produtos
+            recyclerView.setAdapter(new ProdutoCarrinhoAdapter(produtos));
+            RecyclerView.LayoutManager layout = new LinearLayoutManager(CarrinhoAtivoView.this, RecyclerView.VERTICAL, false);
+            recyclerView.setLayoutManager(layout);
+
         } else {
-            Call<Carrinho> call =  ReciclaApplication.getInstance().getAPI().buscaCarrinhoAtual(Session.getInstance().getUsuario());
+            Call<Carrinho> call =  api.buscaCarrinhoAtual(Session.getInstance().getUsuario());
             call.enqueue(new Callback<Carrinho>() {
                 @Override
                 public void onResponse(Call<Carrinho> call, Response<Carrinho> response) {
                     carrinho = response.body();
 
                     // Seta valores do carrinho
-                    textTotalCarrinho.setText(String.valueOf(carrinho.getTotalPesoReciclavel()));
-                    textCriacao.setText(Util.getDate(carrinho.getDataCriacao()));
+                    setTextOnView(carrinho.getTotalPesoReciclavel(), carrinho.getDataCriacao());
 
-                    Call<List<Produto>> callProdutos =  ReciclaApplication.getInstance().getAPI().buscaProdutosCarrinho(carrinho);
+                    Call<List<Produto>> callProdutos =  api.buscaProdutosCarrinho(carrinho);
                     callProdutos.enqueue(callBackProdutos());
                 }
 
@@ -104,12 +117,6 @@ public class CarrinhoAtivoView extends AbstractView implements View.OnClickListe
                 }
             });
         }
-    }
-
-
-    @Override
-    public void onClick(View v) {
-
     }
 
     public Callback<List<Produto>> callBackProdutos(){

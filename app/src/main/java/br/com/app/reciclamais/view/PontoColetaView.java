@@ -23,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PontoColetaView extends Activity {
+public class PontoColetaView extends AbstractView {
 
     @BindView(R.id.edit_nome_fic)
     public EditText editNomeFic;
@@ -62,37 +62,42 @@ public class PontoColetaView extends Activity {
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 lixeira.setCapacidadeTotal(new BigDecimal(editCapTotal.getText().toString()));
                 lixeira.setNomeFicticio(editNomeFic.getText().toString());
                 lixeira.setPontoReferencia(editPontoRef.getText().toString());
 
-                Call<Integer> call = ReciclaApplication.getInstance().getAPI().salvarLixeira(lixeira);
-                call.enqueue(new Callback<Integer>() {
-                    @Override
-                    public void onResponse(Call<Integer> call, Response<Integer> response) {
-                        if(response.code() != 201){
-                            new AlertDialog.Builder(PontoColetaView.this)
-                                    .setTitle("Não foi possível cadastrar a lixeira")
-                                    .setMessage("Ocorreu um problema ao realizar o cadastro")
-                                    .setPositiveButton("OK", null)
-                                    .show();
-                        } else {
-                            new AlertDialog.Builder(PontoColetaView.this)
-                                    .setTitle("Lixeira cadastrada com sucesso")
-                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            Intent intent = new Intent(PontoColetaView.this, MenuView.class);
-                                            startActivity(intent);
-                                        }
-                                    })                                    .show();
+                if(trial){
+                    dataProvider.adicionaPontoColeta(lixeira);
+                } else {
+                    Call<Integer> call = api.salvarLixeira(lixeira);
+                    call.enqueue(new Callback<Integer>() {
+                        @Override
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            if (response.code() != 201) {
+                                new AlertDialog.Builder(PontoColetaView.this)
+                                        .setTitle("Não foi possível cadastrar a lixeira")
+                                        .setMessage("Ocorreu um problema ao realizar o cadastro")
+                                        .setPositiveButton("OK", null)
+                                        .show();
+                            } else {
+                                new AlertDialog.Builder(PontoColetaView.this)
+                                        .setTitle("Lixeira cadastrada com sucesso")
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                Intent intent = new Intent(PontoColetaView.this, MenuView.class);
+                                                startActivity(intent);
+                                            }
+                                        }).show();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Integer> call, Throwable t) {
-                        Log.e("Usuário não cadastrado", "Erro ao cadastrar usuario"+ t.getMessage());
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<Integer> call, Throwable t) {
+                            Log.e("Usuário não cadastrado", "Erro ao cadastrar usuario" + t.getMessage());
+                        }
+                    });
+                }
             }
         });
 

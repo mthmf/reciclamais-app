@@ -23,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PontoColetaListaView extends Activity  {
+public class PontoColetaListaView extends AbstractView  {
 
     @BindView(R.id.recycler_pontos)
     public RecyclerView recyclerPontos;
@@ -67,46 +67,49 @@ public class PontoColetaListaView extends Activity  {
                             .setPositiveButton("OK", null)
                             .show();
                 }
+                if(trial){
+                    dataProvider.adicionaRota(rota);
+                } else {
+                    Call<Integer> callRota = api.cadastraRota(rota);
+                    callRota.enqueue(new Callback<Integer>() {
+                        @Override
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            if (response.code() == 201) {
+                                final Lixeira lixeira = adapter.getLixeiraSelecionada();
+                                lixeira.setRota(response.body());
 
-                Call<Integer> callRota = ReciclaApplication.getInstance().getAPI().cadastraRota(rota);
-                callRota.enqueue(new Callback<Integer>() {
-                    @Override
-                    public void onResponse(Call<Integer> call, Response<Integer> response) {
-                        if(response.code()== 201){
-                            // Altera lixeiras
-                            final Lixeira lixeira = adapter.getLixeiraSelecionada();
-                            lixeira.setRota(response.body());
-                            Call<Lixeira> callLixeira = ReciclaApplication.getInstance().getAPI().alteraLixeira(lixeira);
-                            callLixeira.enqueue(new Callback<Lixeira>() {
-                                @Override
-                                public void onResponse(Call<Lixeira> call, Response<Lixeira> response) {
-                                    if(response.code()== 200){
-                                        System.out.println("FOI " + lixeira.getRota());
+                                Call<Lixeira> callLixeira = api.alteraLixeira(lixeira);
+                                callLixeira.enqueue(new Callback<Lixeira>() {
+                                    @Override
+                                    public void onResponse(Call<Lixeira> call, Response<Lixeira> response) {
+                                        if (response.code() == 200) {
+                                            System.out.println(lixeira.getRota());
+                                        }
                                     }
-                                }
 
-                                @Override
-                                public void onFailure(Call<Lixeira> call, Throwable t) {
-                                    Log.e("Não foi possível buscar os produtos do carrinho", "Erro ao buscar produtos do carrinho"+ t.getMessage());
-                                }
-                            });
+                                    @Override
+                                    public void onFailure(Call<Lixeira> call, Throwable t) {
+                                        Log.e("Não foi possível buscar os produtos do carrinho", "Erro ao buscar produtos do carrinho" + t.getMessage());
+                                    }
+                                });
 
 
-                        } else {
-                            new AlertDialog.Builder(PontoColetaListaView.this)
-                                    .setTitle("Ocorreu um erro ao cadastrar o agendamento")
-                                    .setMessage("Favor tente novamente mais tarde.")
-                                    .setPositiveButton("OK", null)
-                                    .show();
+                            } else {
+                                new AlertDialog.Builder(PontoColetaListaView.this)
+                                        .setTitle("Ocorreu um erro ao cadastrar o agendamento")
+                                        .setMessage("Favor tente novamente mais tarde.")
+                                        .setPositiveButton("OK", null)
+                                        .show();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Integer> call, Throwable t) {
-                        Log.e("Não foi possível buscar os produtos do carrinho", "Erro ao buscar produtos do carrinho"+ t.getMessage());
+                        @Override
+                        public void onFailure(Call<Integer> call, Throwable t) {
+                            Log.e("Não foi possível buscar os produtos do carrinho", "Erro ao buscar produtos do carrinho" + t.getMessage());
 
-                    }
-                });
+                        }
+                    });
+                }
 
             }
         });

@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BaixaCarrinhoView extends Activity {
+public class BaixaCarrinhoView extends AbstractView {
 
     @BindView(R.id.text_criacao_id_baixa)
     public TextView textCriacaoId;
@@ -81,28 +82,36 @@ public class BaixaCarrinhoView extends Activity {
         startElements();
     }
 
+    public void setTextOnView(BigDecimal total, String dataCriacao){
+        textTotalCarrinho.setText(String.valueOf(total));
+        textCriacao.setText(Util.getDate(dataCriacao));
+    }
+
     public void startElements() {
-
         if (carrinho == null) {
-            Call<Carrinho> call = ReciclaApplication.getInstance().getAPI().buscaCarrinhoAtual(Session.getInstance().getUsuario());
-            call.enqueue(new Callback<Carrinho>() {
-                @Override
-                public void onResponse(Call<Carrinho> call, Response<Carrinho> response) {
-                    carrinho = response.body();
-                    // Seta valores do carrinho
-                    textTotalCarrinho.setText(String.valueOf(carrinho.getTotalPesoReciclavel()));
-                    textCriacao.setText(Util.getDate(carrinho.getDataCriacao()));
-                }
 
-                @Override
-                public void onFailure(Call<Carrinho> call, Throwable t) {
-                    Log.e("Não foi possível buscar o carrinho", "Erro ao buscar carrinho" + t.getMessage());
-                }
-            });
+            if(trial) {
+                carrinho = dataProvider.buscaCarrinhoAtivo(Session.getInstance().getUsuario());
+                setTextOnView(carrinho.getTotalPesoReciclavel(),carrinho.getDataCriacao());
+            } else {
+                Call<Carrinho> call = api.buscaCarrinhoAtual(Session.getInstance().getUsuario());
+                call.enqueue(new Callback<Carrinho>() {
+                    @Override
+                    public void onResponse(Call<Carrinho> call, Response<Carrinho> response) {
+                        carrinho = response.body();
+                        // Seta valores do carrinho
+                        setTextOnView(carrinho.getTotalPesoReciclavel(),carrinho.getDataCriacao());
+                    }
+
+                    @Override
+                    public void onFailure(Call<Carrinho> call, Throwable t) {
+                        Log.e("Não foi possível buscar o carrinho", "Erro ao buscar carrinho" + t.getMessage());
+                    }
+                });
+            }
         } else {
             // Seta valores do carrinho
-            textTotalCarrinho.setText(String.valueOf(carrinho.getTotalPesoReciclavel()));
-            textCriacao.setText(Util.getDate(carrinho.getDataCriacao()));
+            setTextOnView(carrinho.getTotalPesoReciclavel(),carrinho.getDataCriacao());
         }
 
         btnConfirmarBaixa.setOnClickListener(new View.OnClickListener() {
@@ -117,62 +126,69 @@ public class BaixaCarrinhoView extends Activity {
                     return;
                 }
                 System.out.println("Lixeira selecionado " + adapter.getLixeiraSelecionada().getEndereco());
+
                 BaixaCarrinho baixaCarrinho = new BaixaCarrinho();
                 baixaCarrinho.setCodigoCarrinho(carrinho.getCodigo());
                 baixaCarrinho.setCodigoLixeira(adapter.getLixeiraSelecionada().getCodigo());
                 baixaCarrinho.setDataBaixa(Util.getDateTime(LocalDateTime.now()));
                 baixaCarrinho.setStatus(BaixaStatus.BAIXADO.getCodigo());
 
-                Call<Integer> callBaixa = ReciclaApplication.getInstance().getAPI().confirmaBaixa(baixaCarrinho);
-                callBaixa.enqueue(new Callback<Integer>() {
-                    @Override
-                    public void onResponse(Call<Integer> call, Response<Integer> response) {
-                        System.out.println(" Código " + response.code());
-                        if (response.code() == 201) {
-                            carrinho.setAtivo(Boolean.FALSE);
-                            Call<Carrinho> carrinhoCall = ReciclaApplication.getInstance().getAPI().alteraCarrinho(carrinho);
-                            carrinhoCall.enqueue(new Callback<Carrinho>() {
-                                @Override
-                                public void onResponse(Call<Carrinho> call, Response<Carrinho> response) {
-                                    carrinho = response.body();
-                                    if (response.code() == 200) {
-                                        System.out.println("FOI " + carrinho.getAtivo());
-                                    }
-                                }
+                if(trial){
+                    dataProvider.adicionarBaixaCarrinho(baixaCarrinho);
+                } else {
+                    Call<Integer> callBaixa = api.confirmaBaixa(baixaCarrinho);
+                    callBaixa.enqueue(new Callback<Integer>() {
+                        @Override
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            if (response.code() == 201) {
+                                carrinho.setAtivo(Boolean.FALSE);
 
-                                @Override
-                                public void onFailure(Call<Carrinho> call, Throwable t) {
-                                    Log.e("Não foi possível buscar os produtos do carrinho", "Erro ao buscar produtos do carrinho" + t.getMessage());
-
-                                }
-                            });
-
-
-                            new AlertDialog.Builder(BaixaCarrinhoView.this)
-                                    .setTitle("Baixa realizada")
-                                    .setMessage("Baixa foi realizada com sucesso.")
-                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            Intent intent = new Intent(BaixaCarrinhoView.this, MenuView.class);
-                                            startActivity(intent);
+                                if(trial){
+                                    dataProvider.alteraCarrinho(carrinho);
+                                } else {
+                                    Call<Carrinho> carrinhoCall = api.alteraCarrinho(carrinho);
+                                    carrinhoCall.enqueue(new Callback<Carrinho>() {
+                                        @Override
+                                        public void onResponse(Call<Carrinho> call, Response<Carrinho> response) {
+                                            carrinho = response.body();
+                                            if (response.code() == 200) {
+                                                System.out.println("FOI " + carrinho.getAtivo());
+                                            }
                                         }
-                                    })
-                                    .show();
-                        } else {
-                            new AlertDialog.Builder(BaixaCarrinhoView.this)
-                                    .setTitle("Ocorreu um erro ao cadastrar o agendamento")
-                                    .setMessage("Favor tente novamente mais tarde.")
-                                    .setPositiveButton("OK", null)
-                                    .show();
+                                        @Override
+                                        public void onFailure(Call<Carrinho> call, Throwable t) {
+                                            Log.e("Não foi possível buscar os produtos do carrinho", "Erro ao buscar produtos do carrinho" + t.getMessage());
+
+                                        }
+                                    });
+                                }
+
+
+                                new AlertDialog.Builder(BaixaCarrinhoView.this)
+                                        .setTitle("Baixa realizada")
+                                        .setMessage("Baixa foi realizada com sucesso.")
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                Intent intent = new Intent(BaixaCarrinhoView.this, MenuView.class);
+                                                startActivity(intent);
+                                            }
+                                        })
+                                        .show();
+                            } else {
+                                new AlertDialog.Builder(BaixaCarrinhoView.this)
+                                        .setTitle("Ocorreu um erro ao cadastrar o agendamento")
+                                        .setMessage("Favor tente novamente mais tarde.")
+                                        .setPositiveButton("OK", null)
+                                        .show();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Integer> call, Throwable t) {
-                        Log.e("Erro ao cadastrar baixa", "Erro ao cadastrar baixa" + t.getMessage());
-                    }
-                });
-
+                        @Override
+                        public void onFailure(Call<Integer> call, Throwable t) {
+                            Log.e("Erro ao cadastrar baixa", "Erro ao cadastrar baixa" + t.getMessage());
+                        }
+                    });
+                }
 
             }
         });

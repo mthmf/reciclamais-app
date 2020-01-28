@@ -14,7 +14,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import br.com.app.reciclamais.R;
-import br.com.app.reciclamais.ReciclaApplication;
 import br.com.app.reciclamais.commons.Session;
 import br.com.app.reciclamais.enums.PerfilEnum;
 import br.com.app.reciclamais.model.Usuario;
@@ -76,7 +75,7 @@ public class LoginView extends AbstractView {
                     dataProvider.buscaUsuario(usuario);
                 } else {
                     final Context context = v.getContext();
-                    Call<Usuario> call = ReciclaApplication.getInstance().getAPI().login(usuario);
+                    Call<Usuario> call = api.login(usuario);
                     call.enqueue(new Callback<Usuario>() {
                         @Override
                         public void onResponse(Call<Usuario> call, Response<Usuario> response) {
@@ -123,7 +122,7 @@ public class LoginView extends AbstractView {
                 if(Session.getInstance().getTrialVersion()){
                     dataProvider.adicionaUsuario(usuario);
                 } else {
-                    Call<Integer> call = ReciclaApplication.getInstance().getAPI().sendUsuario(usuario);
+                    Call<Integer> call = api.sendUsuario(usuario);
                     call.enqueue(new Callback<Integer>() {
                         @Override
                         public void onResponse(Call<Integer> call, Response<Integer> response) {

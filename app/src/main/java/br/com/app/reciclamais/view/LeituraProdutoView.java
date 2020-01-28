@@ -29,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LeituraProdutoView extends Activity implements Detector.Processor {
+public class LeituraProdutoView extends AbstractView implements Detector.Processor {
 
     @BindView(R.id.surfaceView)
     public SurfaceView surfaceView;
@@ -39,6 +39,12 @@ public class LeituraProdutoView extends Activity implements Detector.Processor {
     private BarcodeDetector barcodeDetector;
 
     private CameraSource cameraSource;
+
+
+    @Override
+    void startElements() {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +101,7 @@ public class LeituraProdutoView extends Activity implements Detector.Processor {
         if(barcodes.size() != 0 && bar == null ) {
             System.out.println(barcodes.valueAt(0));
             bar = barcodes.valueAt(0);
-            Call<Produto> callProduto = ReciclaApplication.getInstance().getAPI().buscaProduto(bar.displayValue);
+            Call<Produto> callProduto = api.buscaProduto(bar.displayValue);
             callProduto.enqueue(new Callback<Produto>() {
                 @Override
                 public void onResponse(Call<Produto> call, Response<Produto> response) {

@@ -194,6 +194,14 @@ public class DataProvider {
         listaUsuario.add(usuario3);
     }
 
+    public void alteraCarrinho(Carrinho carrinho){
+        for(Carrinho car : listaCarrinho){
+            if(car.getCodigo().equals(carrinho.getCodigo())){
+                car.setAtivo(false);
+            }
+        }
+    }
+
     public boolean buscaUsuario(final Usuario usuario){
         for(Usuario user: listaUsuario){
             if(user.getEmail() == usuario.getEmail() && user.getSenha() == usuario.getSenha()){
@@ -203,21 +211,36 @@ public class DataProvider {
         return false;
     }
 
-    public List<Carrinho> buscaCarrinho(final Usuario usuario){
+    public Carrinho buscaCarrinhoAtivo(final Usuario usuario) {
+        for (Carrinho carrinho : listaCarrinho) {
+            if (carrinho.getUsuario() == usuario.getCodigo() && carrinho.getAtivo()) {
+                return carrinho;
+            }
+        }
         return null;
+    }
+
+    public List<Rota> buscaRotas(){
+        return listaRota;
+    }
+
+    public List<Produto> buscaProdutosCarrinho(final Carrinho carrinho){
+        return listaProduto;
     }
 
     public boolean adicionaUsuario(Usuario usuario){
         return listaUsuario.add(usuario);
     }
 
+    public boolean adicionarBaixaCarrinho(BaixaCarrinho baixaCarrinho) { return listaBaixaCarrinho.add(baixaCarrinho);}
+
+    public boolean adicionaProduto(Produto produto){ return listaProduto.add(produto);}
+
     public boolean adicionaRota(Rota rota){ return listaRota.add(rota); }
 
-    public boolean adicionaLixeira(Lixeira lixeira) { return listaLixeira.add(lixeira); }
+    public boolean adicionaPontoColeta(Lixeira lixeira) { return listaLixeira.add(lixeira); }
 
     public boolean adicionaCarrinho(Carrinho carrinho){ return listaCarrinho.add(carrinho); }
 
     public boolean adicionaBaixaRota(BaixaRota baixaRota) { return listaBaixaRota.add(baixaRota);}
-
-    public boolean adicionarBaixaCarrinho(BaixaCarrinho baixaCarrinho) { return listaBaixaCarrinho.add(baixaCarrinho);}
 }
